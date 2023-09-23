@@ -1,31 +1,35 @@
-class Prueba
+require_relative 'document'
 
-  def materia
-    :tadp
+class Alumno
+  attr_reader :nombre, :legajo, :estado
+  def initialize(nombre, legajo, telefono, estado)
+    @nombre = nombre
+    @legajo = legajo
+    @telefono = telefono
+    @estado = estado
   end
 end
 
-require_relative 'tag'
-require_relative 'helpers/alumno'
+class Estado
+  attr_reader :finales_rendidos, :materias_aprobadas, :es_regular
+  def initialize(finales_rendidos, materias_aprobadas, es_regular)
+    @finales_rendidos = finales_rendidos
+    @es_regular = es_regular
+    @materias_aprobadas = materias_aprobadas
+  end
+end
 
-unTag = Tag
-  .with_label('alumno')
-  .with_attribute('nombre', 'Mati')
-  .with_attribute('legajo', '123456-7')
-  .with_attribute('edad', 27)
-  .with_child(
-    Tag
-      .with_label('telefono')
-      .with_child('12345678')
-  )
-  .with_child(
-    Tag
-      .with_label('estado')
-      .with_child(
-        Tag
-          .with_label('value')
-          .with_child('regular')
-      )
-  )
-  .with_child(Tag.with_label('no_children'))
-  .xml
+unEstado = Estado.new(3, 5, true)
+unAlumno = Alumno.new("Matias","123456-8", "1234567890", unEstado)
+
+
+documento_automatico = Document.serialize(unAlumno)
+puts documento_automatico.xml
+
+=begin
+nombre="Matias" legajo="123456-8">
+	<estado finales_rendidos=3 es_regular=true materias_aprobadas=5/>
+</Alumno>
+=end
+
+#TODO que los nombres empiezen en minuscula

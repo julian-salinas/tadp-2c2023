@@ -4,17 +4,17 @@ require_relative 'utils/object_mapper'
 class Document
   attr_writer :root_tag
   def self.serialize(thing)
-    document = new()
+    document = new
     document.root_tag = document.generate_tag(thing.class.name, thing)
     document
   end
 
-  def xml()
+  def xml
     @root_tag.xml
   end
 
   def generate_tag(parent_name, parent_value)
-    attributes_map = ObjectMapper.map_attributes(parent_value)
+    attributes_map = ObjectMapper.map_public_attributes(parent_value)
     new_tag = Tag.with_label(parent_name)
     attributes_map.each do |name, value|
       add_to_tag(new_tag, name, value)
@@ -24,7 +24,8 @@ class Document
 
   def add_to_tag(new_tag, name, value)
     # todo: parte 3: que onda los children?
-    if is_attribute?(value) then new_tag.with_attribute(name, value)
+    if is_attribute?(value)
+      new_tag.with_attribute(name, value)
     else new_tag.with_child(
       generate_tag name, value
     )
