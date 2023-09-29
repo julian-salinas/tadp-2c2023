@@ -28,7 +28,7 @@ documento_automatico = Document.serialize(unAlumno)
 puts documento_automatico.xml
 
 =begin
-nombre="Matias" legajo="123456-8">
+<nombre="Matias" legajo="123456-8">
 	<estado finales_rendidos=3 es_regular=true materias_aprobadas=5/>
 </Alumno>
 

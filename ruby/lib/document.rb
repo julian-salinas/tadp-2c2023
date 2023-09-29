@@ -59,10 +59,12 @@ class Document
   end
 
   def method_missing(tag_name, attributes = {}, &block)
-    new_tag = Tag.with_label(tag_name.to_s)
-    add_attributes_to_tag(new_tag, attributes)
-    @root_tag.with_child(new_tag)
+    new_tag = Tag.with_label(tag_name)
+    Document.add_attributes_to_tag(new_tag, attributes)
+    # @root_tag.with_child(new_tag)
     if block_given?
+
+
       previous_tag = @root_tag
       @root_tag = new_tag
       instance_eval(&block)
@@ -73,4 +75,5 @@ class Document
   def respond_to_missing?(msg_name, includ_privete=false)
 
   end
+
 end

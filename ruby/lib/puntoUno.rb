@@ -1,6 +1,8 @@
 require_relative 'document'
 
-documento = Document.new do
+documento = Document.new
+
+a = proc do
   alumno nombre: "Matias", legajo: "123456-7" do
     telefono { "1234567890" }
     estado es_regular: true do
