@@ -4,7 +4,6 @@ require_relative 'utils/object_mapper'
 class Document
   attr_writer :root_tag
 
-
   def xml
     @root_tag.xml
   end
@@ -44,20 +43,6 @@ class Document
     primitive_attributes.any?{ |primitive| type.class <= primitive }
   end
 
-  # Serialización manual
-=begin
-
-  private def method_missing(symbol, *args, &block)
-    document.root_tag = document.generate_tag(symbol, args)
-
-    args.each do |key, value|
-      puts "#{key}: #{value}"
-    end
-
-    #super
-  end
-=end
-
   def self.serialize(thing)
     document = new
     new_tag = document.create_tag_with_name(thing.class.name)
@@ -66,4 +51,19 @@ class Document
     document
   end
 
+  def method_missing(tag_name, attributes = {}, &block)
+    new_tag = Tag.with_label(tag_name.to_s)
+    add_attributes_to_tag(new_tag, attributes)
+    @root_tag.with_child(new_tag)
+    if block_given?
+      previous_tag = @root_tag
+      @root_tag = new_tag
+      instance_eval(&block)
+      @root_tag = previous_tag
+    end
+  end
+
+  def respond_to_missing?(msg_name, includ_privete=false)
+
+  end
 end
