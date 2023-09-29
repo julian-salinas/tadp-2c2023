@@ -4,6 +4,13 @@ require_relative 'utils/object_mapper'
 class Document
   attr_writer :root_tag
 
+  def initialize(&block)
+    if block_given?
+      @root_tag = instance_eval &block
+      self
+    end
+  end
+
   def xml
     @root_tag.xml
   end
