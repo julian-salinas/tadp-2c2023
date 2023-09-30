@@ -1,15 +1,26 @@
 require_relative 'tag'
 require_relative 'utils/object_mapper'
+require_relative 'block_to_object_mapper'
 
 class Document
   attr_writer :root_tag
+  attr_reader :root_tag
 
   def initialize(&block)
     if block_given?
-      @root_tag = instance_eval &block
+      @root_tag = Document.initialize_from_block(&block)
       self
     end
   end
+
+  def self.initialize_from_block(&block)
+    document = new
+    puts document
+    new_tag = document.create_tag_with_name("ashe")
+    attributes_map = ObjectMapper.map_public_attributes(BlockToObjectMapper.map(&block))
+    add_attributes_to_tag(new_tag, attributes_map)
+  end
+
 
   def xml
     @root_tag.xml
@@ -58,22 +69,6 @@ class Document
     document
   end
 
-  def method_missing(tag_name, attributes = {}, &block)
-    new_tag = Tag.with_label(tag_name)
-    Document.add_attributes_to_tag(new_tag, attributes)
-    # @root_tag.with_child(new_tag)
-    if block_given?
-
-
-      previous_tag = @root_tag
-      @root_tag = new_tag
-      instance_eval(&block)
-      @root_tag = previous_tag
-    end
-  end
-
-  def respond_to_missing?(msg_name, includ_privete=false)
-
-  end
 
 end
+

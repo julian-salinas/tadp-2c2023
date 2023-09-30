@@ -1,7 +1,7 @@
 class ObjectMapper
   def self.map_public_attributes(object)
     attributes_map = {}
-    object_methods = object.class.instance_methods.map {|m| "#{m}"}
+    object_methods = object.methods.map {|m| "#{m}"}
 
     object.instance_variables.each do |variable|
       attr_name = variable[1..-1]
