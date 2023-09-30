@@ -1,10 +1,11 @@
 require_relative 'tag'
-require_relative 'utils/object_mapper'
 require_relative 'block_to_object_mapper'
+require_relative 'utils/type_helper'
+require_relative 'utils/object_mapper'
+require_relative 'utils/block_name_extractor'
 
 class Document
-  attr_writer :root_tag
-  attr_reader :root_tag
+  attr_accessor :root_tag
 
   def initialize(&block)
     if block_given?
@@ -16,7 +17,7 @@ class Document
   def self.initialize_from_block(&block)
     document = new
     puts document
-    new_tag = document.create_tag_with_name("ashe")
+    new_tag = document.create_tag_with_name(BlockNameExtractor.extract(&block))
     attributes_map = ObjectMapper.map_public_attributes(BlockToObjectMapper.map(&block))
     add_attributes_to_tag(new_tag, attributes_map)
   end
@@ -57,8 +58,7 @@ class Document
   end
 
   def self.is_attribute?(type)
-    primitive_attributes = [Numeric, TrueClass, FalseClass, String]
-    primitive_attributes.any?{ |primitive| type.class <= primitive }
+    TypeHelper.is_primitive?(type)
   end
 
   def self.serialize(thing)

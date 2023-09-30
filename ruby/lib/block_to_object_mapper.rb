@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative './utils/block_name_extractor'
+
 class BlockToObjectMapper
 
   def self.map(&block)
@@ -15,10 +17,13 @@ class BlockToObjectMapper
       self.define_singleton_method(key) { value }
     end
 
-
     if block_given?
-      # do something
-      # instance_variable_set("@child".to_sym, BlockToObjectMapper.map(&block))
+      if TypeHelper.is_primitive? block.call.class
+        # pending: esto sería un child
+      else
+        instance_variable_set("@#{BlockNameExtractor.extract(&block)}", BlockToObjectMapper.map(&block))
+        self.define_singleton_method(BlockNameExtractor.extract(&block).to_s) { BlockToObjectMapper.map(&block) }
+      end
     end
 
   end
