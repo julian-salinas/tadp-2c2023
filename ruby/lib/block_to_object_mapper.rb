@@ -18,7 +18,7 @@ class BlockToObjectMapper
     end
 
     if block_given?
-      if TypeHelper.is_primitive? block.call.class
+      if TypeHelper.is_primitive? block.call
         # pending: esto sería un child
       else
         instance_variable_set("@#{BlockNameExtractor.extract(&block)}", BlockToObjectMapper.map(&block))
