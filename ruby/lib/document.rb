@@ -1,7 +1,7 @@
 require_relative 'tag'
-require_relative 'block_to_object_mapper'
-require_relative 'utils/type_helper'
-require_relative 'utils/object_mapper'
+require_relative 'mapper/block_to_object_mapper'
+require_relative 'utils/type_utils'
+require_relative './mapper/object_mapper'
 require_relative 'utils/block_name_extractor'
 
 class Document
@@ -34,6 +34,7 @@ class Document
   end
 
   def self.generate_tag(parent_name, parent_value)
+    puts "DOCUMENT: GENERATE_TAG: parent_name #{parent_name}, parent_value #{parent_value}"
     attributes_map = ObjectMapper.map_public_attributes(parent_value)
     new_tag = Tag.with_label(parent_name)
     add_attributes_to_tag(new_tag, attributes_map)
@@ -50,15 +51,19 @@ class Document
   def self.add_to_tag(new_tag, name, value)
     # todo: parte 3: que onda los children?
     if is_attribute?(value)
+      puts "DOCUMENT: agregado atributo #{name} con value #{value}"
       new_tag.with_attribute(name, value)
-    else new_tag.with_child(
+    else
+      puts "DOCUMENT: agregado child #{name} con value #{value}"
+      new_tag.with_child(
+
       generate_tag name, value
     )
     end
   end
 
   def self.is_attribute?(type)
-    TypeHelper.is_primitive?(type)
+    TypeUtils.is_primitive?(type)
   end
 
   def self.serialize(thing)
