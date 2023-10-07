@@ -1,5 +1,5 @@
 require_relative "../lib/mapper/block_to_object_mapper"
-require_relative "../lib/mapper/object_mapper"
+require_relative "../lib/mapper/public_attributes_extractor"
 require_relative './spec_helper'
 
 describe BlockToObjectMapper do

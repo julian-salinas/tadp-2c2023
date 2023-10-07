@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'attribute'
+
 class MappedObject
 
   attr_reader :name, :attributes
@@ -24,10 +26,3 @@ class MappedObject
 
 end
 
-class Attribute
-  def initialize(name, value)
-    @name = name
-    @value = value
-    self
-  end
-end
