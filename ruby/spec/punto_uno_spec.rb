@@ -32,7 +32,7 @@ describe Document do
         end
         doc_serializado = documento.xml
         puts doc_serializado
-        expected_document = '<alumno nombre="Carlos" legajo="123456-8"><estado finales_rendidos=3 es_regular=true materias_aprobadas=5/></alumno>'
+        expected_document = '<alumno nombre="Carlos" legajo="123456-8"><telefono>"1234567890"</telefono><estado es_regular=true><finales_rendidos>3</finales_rendidos><materias_aprobadas>5</materias_aprobadas></estado></alumno>'
         expect(doc_serializado.gsub(/[\t\n]+/, "")).to eq(expected_document)
       end
     end

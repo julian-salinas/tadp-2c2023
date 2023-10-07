@@ -32,53 +32,23 @@ class Document
       if TypeUtils.is_primitive? attribute.value then
         root_object.add_attribute(attribute.name, attribute.value) #TODO refactor AGREGAR RECURSIVIDAD
       else
-        #todo
+        root_object.add_child(document.to_mapped_object(attribute))
       end
     end
     document.root_tag = MappedObjectSerializer.serialize(root_object)
     document
   end
 
-
-end
-
-doc = Document.new do
-  alumno nombre: "Matias", legajo: "123456-7" do
-    telefono { "1234567890" }
-    estado es_regular: true do
-      finales_rendidos { 3 }
-      materias_aprobadas { 5 }
+  def to_mapped_object(thing)
+    mapped_object = MappedObject.new(thing.name)
+    attributes_list = PublicAttributesExtractor.list_public_attributes(thing.value)
+    attributes_list.each do |attribute|
+      if TypeUtils.is_primitive? attribute.value then
+        mapped_object.add_attribute(attribute.name, attribute.value)
+      else
+        mapped_object.add_child to_mapped_object(attribute)
+      end
     end
-    gobierno es_feo: true do
-      congreso { 1 }
-      dinero { 7 }
-    end
+    mapped_object
   end
 end
-
-#puts doc.xml
-
-
-class Alumno
-  attr_reader :nombre, :legajo, :estado
-  def initialize(nombre, legajo, telefono, estado)
-    @nombre = nombre
-    @legajo = legajo
-    @telefono = telefono
-    @estado = estado
-  end
-end
-
-class Estado
-  attr_reader :finales_rendidos, :materias_aprobadas, :es_regular
-  def initialize(finales_rendidos, materias_aprobadas, es_regular)
-    @finales_rendidos = finales_rendidos
-    @es_regular = es_regular
-    @materias_aprobadas = materias_aprobadas
-  end
-end
-unEstado = Estado.new(3, 5, true)
-unAlumno = Alumno.new("Matias","123456-8", "1234567890", unEstado)
-
-doc2 = Document.serialize(unAlumno)
-puts doc2.xml
