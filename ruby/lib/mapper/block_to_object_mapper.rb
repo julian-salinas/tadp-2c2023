@@ -2,41 +2,46 @@
 
 require_relative '../utils/block_name_extractor'
 require_relative '../utils/type_utils'
+require_relative '../model/mapped_object'
 
 class BlockToObjectMapper
 
-  def self.map(&block)
-    obj = new
-    obj.instance_eval(&block)
-    obj
+  attr_accessor :children
+
+  def initialize
+    #@children = []
   end
 
+  def self.map(&block)
+    mapper = new
+    mapper.instance_eval(&block)
+  end
+
+
+
+
   private def method_missing(name, *args, **kwargs, &block)
-    puts "method_missing - block_to_object_mapper: (#{name}, #{args}, #{kwargs}, #{block})"
+    @mapped_object = MappedObject.new(name)
+
     kwargs.each do |key, value|
-      instance_variable_set("@#{key}".to_sym, value)
-      self.define_singleton_method(key) { value }
+      @mapped_object.add_attribute(key, value)
     end
 
-    if block_given?
-      if TypeUtils.is_primitive? block.call
-        # =begin
-           # puts "name: #{name}"
-        # CHILD FINAL
-        # puts "child final: #{BlockNameExtractor.extract(&block)}"
-        # instance_variable_set("@#{name}", block.call)
-        # puts "asignando #{block.call} a @#{name}"
-        # self.define_singleton_method(name) { block.call }
-        # child = ObjectMapper.map_public_attributes(BlockToObjectMapper.map(&block))
-      else
-        # CHILD OBJETO
-        puts "child objetoso: #{BlockNameExtractor.extract(&block)}"
-        instance_variable_set("@#{BlockNameExtractor.extract(&block)}", BlockToObjectMapper.map(&block))
-        self.define_singleton_method(BlockNameExtractor.extract(&block).to_s) { BlockToObjectMapper.map(&block) }
-      end
+    @mapped_object.add_child(BlockToObjectMapper.map(&block))
+
+    # mapped_object
+
+=begin
+    if TypeUtils.is_primitive? block.call # Si el bloque retorna un tipo primitivo...
+      # CHILD FINAL (items)
+      instance_variable_set("@#{name}", block.call)
+      self.define_singleton_method(:"#{name}") { block.call }
     else
-      #
+      # CHILD OBJETO
+      instance_variable_set("@#{BlockNameExtractor.extract(&block)}", BlockToObjectMapper.map(&block))
+      self.define_singleton_method(BlockNameExtractor.extract(&block).to_s) { BlockToObjectMapper.map(&block) }
     end
+=end
 
   end
 

@@ -18,6 +18,7 @@ class Document
     document = new
     puts document
     new_tag = document.create_tag_with_name(BlockNameExtractor.extract(&block))
+    # object_mapper = BlockToObjectMapper.new(BlockNameExtractor.extract(&block))
     attributes_map = ObjectMapper.map_public_attributes(BlockToObjectMapper.map(&block))
     add_attributes_to_tag(new_tag, attributes_map)
   end
@@ -68,7 +69,8 @@ class Document
 
   def self.serialize(thing)
     document = new
-    new_tag = document.create_tag_with_name(thing.class.name)
+    tag_name = thing.class.name
+    new_tag = document.create_tag_with_name(tag_name[0].downcase + tag_name[1..-1]) #TODO solve warnings
     attributes_map = ObjectMapper.map_public_attributes(thing)
     document.root_tag = add_attributes_to_tag(new_tag, attributes_map)
     document
