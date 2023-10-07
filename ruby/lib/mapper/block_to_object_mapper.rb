@@ -19,8 +19,27 @@ class BlockToObjectMapper
       mapped_object.add_attribute(key, value)
     end
 
+    #mapped_object.add_child(BlockToObjectMapper.map(&block))
+
     mapped_object.child_or_children = ChildrenBuilder.new(&block).children
     mapped_object
   end
 end
 
+
+a = proc do
+  alumno nombre: "Matias", legajo: "123456-7" do
+    telefono { "1234567890" }
+    estado es_regular: true do
+      finales_rendidos { 3 }
+      materias_aprobadas { 5 }
+    end
+    gobierno es_feo: true do
+      congreso { 1 }
+      dinero { 7 }
+    end
+  end
+end
+
+b = BlockToObjectMapper.map(&a)
+puts b

@@ -9,9 +9,12 @@ class ChildrenBuilder
 
   def initialize(&block)
     @children = []
-    instance_eval(&block)
+    ret = instance_eval(&block)
+    if TypeUtils.is_primitive? ret
+      @children.push(ret)
+    end
     self
-  end
+    end
 
   private def method_missing(name, *args, **kwargs, &block)
     puts "children_builder #{name}, #{args}, #{kwargs}, #{block}"
@@ -21,7 +24,12 @@ class ChildrenBuilder
       mapped_object.add_attribute(key, value)
     end
 
-    @children.push(BlockToObjectMapper.map(&block))
+    mapped_object.child_or_children = ChildrenBuilder.new(&block).children
+
+    @children.push(mapped_object)
   end
 
 end
+
+
+

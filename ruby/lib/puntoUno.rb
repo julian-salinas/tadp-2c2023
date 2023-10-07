@@ -23,7 +23,7 @@ a = proc do
       finales_rendidos { 3 }
       materias_aprobadas { 5 }
     end
-    gobierno es_regular: true do
+    gobierno es_feo: true do
       congreso { 1 }
       dinero { 7 }
     end
