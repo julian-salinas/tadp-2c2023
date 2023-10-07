@@ -1,6 +1,6 @@
 
 require_relative 'spec_helper'
-require_relative './../lib/document'
+require_relative '../lib/document'
 
 
 describe Document do

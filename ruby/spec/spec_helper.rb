@@ -16,4 +16,3 @@ class Estado
     @materias_aprobadas = materias_aprobadas
   end
 end
-
