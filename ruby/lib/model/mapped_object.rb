@@ -2,7 +2,8 @@
 
 class MappedObject
 
-  attr_reader :name, :attributes, :child_or_children
+  attr_reader :name, :attributes
+  attr_accessor :child_or_children
 
   def initialize(name)
     @name = name
