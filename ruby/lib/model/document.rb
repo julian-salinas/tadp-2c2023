@@ -1,9 +1,12 @@
-require_relative 'tag'
-require_relative 'mapper/block_to_object_mapper'
-require_relative 'utils/type_utils'
-require_relative './mapper/public_attributes_extractor'
-require_relative 'utils/block_name_extractor'
-require_relative 'serializer/mapped_object_serializer'
+require_relative '../metamodel/object'
+require_relative '../metamodel/class'
+require_relative '../tag'
+require_relative '../utils/type_utils'
+require_relative '../utils/block_name_extractor'
+require_relative '../mapper/public_attributes_extractor'
+require_relative '../mapper/block_to_object_mapper'
+require_relative '../serializer/mapped_object_serializer'
+require_relative 'annotations/default'
 
 class Document
   attr_accessor :root_tag
@@ -23,19 +26,13 @@ class Document
   # Serialización automática
 
   def self.serialize(thing)
-    document = new
-    tag_name = thing.class.name
-
-    root_object = MappedObject.new(tag_name)
-    attributes_list = PublicAttributesExtractor.list_public_attributes(thing)
-    attributes_list.each do |attribute|
-      if TypeUtils.is_primitive? attribute.value then
-        root_object.add_attribute(attribute.name, attribute.value) #TODO refactor AGREGAR RECURSIVIDAD
-      else
-        root_object.add_child(document.to_mapped_object(attribute))
-      end
+    if thing.class.metadata.has_serializer_for? "root"
+      root = thing.class.metadata.serializers["root"].serialize_object(thing)
+    else
+      root = Default.new.serialize_object(thing)
     end
-    document.root_tag = MappedObjectSerializer.serialize(root_object)
+    document = Document.new
+    document.root_tag = MappedObjectSerializer.serialize(root)
     document
   end
 

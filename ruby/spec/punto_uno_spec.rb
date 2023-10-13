@@ -1,7 +1,6 @@
 
 require_relative 'spec_helper'
-require_relative '../lib/document'
-
+require_relative '../lib/model/document'
 
 describe Document do
   context "document serialization" do
@@ -36,5 +35,6 @@ describe Document do
         expect(doc_serializado.gsub(/[\t\n]+/, "")).to eq(expected_document)
       end
     end
+
   end
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Attribute
-  attr_reader :name, :value
+  attr_accessor :name, :value
 
   def initialize(name, value)
     @name = name

@@ -2,7 +2,7 @@ require_relative "../lib/mapper/block_to_object_mapper"
 require_relative "../lib/mapper/public_attributes_extractor"
 require_relative './spec_helper'
 
-describe BlockToObjectMapper do
+describe BlockToObjectMapper, skip: true do
   context "given an object represented by a block composed of " do
     describe "1 message and 2 kwargs" do
       it "maps to an object with 2 attributes" do

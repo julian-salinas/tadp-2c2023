@@ -19,7 +19,6 @@ class MappedObject
   end
 
   def add_child(child)
-    puts "Agregando child #{child} a #{self}"
     @child_or_children.push(child)
     self
   end

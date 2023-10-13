@@ -1,6 +1,39 @@
 require 'rspec'
+require_relative '../lib/metamodel/class'
+require_relative '../lib/metamodel/object'
+
 class Alumno
+  attr_reader :nombre, :legajo
+
+  attr_reader :estado
+  def initialize(nombre, legajo, estado)
+    @nombre = nombre
+    @legajo = legajo
+    @estado = estado
+  end
+
+end
+
+✨Label✨("Estudiante")
+class AlumnoEstudiante
   attr_reader :nombre, :legajo, :estado
+  def initialize(nombre, legajo, estado)
+    @nombre = nombre
+    @legajo = legajo
+    @estado = estado
+  end
+end
+
+✨Label✨("Pibardo")
+class AlumnoReBasado
+  attr_reader :nombre
+
+  ✨Label✨("numerito-que-no-se-acuerda")
+  attr_reader :legajo
+
+  ✨Label✨("esto-no-se-pregunta")
+  attr_reader :estado
+
   def initialize(nombre, legajo, estado)
     @nombre = nombre
     @legajo = legajo
