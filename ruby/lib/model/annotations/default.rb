@@ -16,7 +16,7 @@ class Default
   end
 
   def create_root(thing)
-      MappedObject.new(thing.class.name)
+    MappedObject.new(thing.class.name) # esto genera problemas, la raiz no es polimorfica con los hijos
   end
 
   def serialize_attributes(thing, root_object)
@@ -29,7 +29,6 @@ class Default
   end
 
   def serialize_attribute(root_object, attribute, attribute_serializers)
-    #if attribute.ignore then return end
 
     if TypeUtils.is_primitive? attribute.value
 

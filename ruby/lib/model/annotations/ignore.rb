@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 
-class Ignore < Default
+class Ignore
 
   def serialize_object(thing)
     thing.ignore= true

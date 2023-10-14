@@ -52,3 +52,20 @@ class Estado
     @materias_aprobadas = materias_aprobadas
   end
 end
+
+class AlumnoQueUsaInline
+
+  ✨Inline✨ {|campo| campo.upcase }
+  attr_reader :nombre, :legajo
+  def initialize(nombre, legajo, telefono, estado)
+    @nombre = nombre
+    @legajo = legajo
+    @telefono = telefono
+    @estado = estado
+  end
+
+  ✨Inline✨ {|estado| estado.es_regular }
+  def estado
+    @estado
+  end
+end
