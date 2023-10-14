@@ -5,11 +5,14 @@ require_relative '../lib/metamodel/object'
 class Alumno
   attr_reader :nombre, :legajo
 
-  attr_reader :estado
   def initialize(nombre, legajo, estado)
     @nombre = nombre
     @legajo = legajo
     @estado = estado
+  end
+
+  def estado
+    @estado
   end
 
 end

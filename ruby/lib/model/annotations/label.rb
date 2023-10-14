@@ -3,20 +3,18 @@
 require_relative '../../utils/type_utils'
 require_relative 'default'
 
-class Label < Default
+class Label
   attr_reader :name
-  attr_accessor :serializes_attributes
 
   def initialize(name)
     @name = name
   end
 
-  def create_root(thing)
-    MappedObject.new(@name)
+  def apply_over_root(root)
+    root.name = @name
   end
 
-  def serialize_attribute(root_object, attribute)
+  def apply_over_attribute(attribute)
     attribute.name = @name
-    super(root_object, attribute)
   end
 end

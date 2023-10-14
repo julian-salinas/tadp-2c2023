@@ -14,7 +14,10 @@ class Metadata
   end
 
   def add_annotation(name, block)
-    @serializers[name] = block
+    unless has_serializer_for? name
+      @serializers[name] = []
+    end
+    @serializers[name].push(block)
   end
 
   def has_serializer_for?(name)

@@ -4,8 +4,8 @@ require_relative 'attribute'
 
 class MappedObject
 
-  attr_reader :name, :attributes
-  attr_accessor :child_or_children
+  attr_reader :attributes
+  attr_accessor :child_or_children, :name, :ignore
 
   def initialize(name)
     @name = name

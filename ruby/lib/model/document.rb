@@ -26,11 +26,7 @@ class Document
   # Serialización automática
 
   def self.serialize(thing)
-    if thing.class.metadata.has_serializer_for? "root"
-      root = thing.class.metadata.serializers["root"].serialize_object(thing)
-    else
-      root = Default.new.serialize_object(thing)
-    end
+    root = Default.new.serialize_object(thing)
     document = Document.new
     document.root_tag = MappedObjectSerializer.serialize(root)
     document

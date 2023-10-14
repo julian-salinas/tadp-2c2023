@@ -19,4 +19,10 @@ class Object
       super
     end
   end
+
+  def respond_to_missing?(method_name, include_private = false)
+    if is_star_annotation? method_name
+      true else super
+    end
+  end
 end

@@ -1,7 +1,7 @@
 require_relative '../model/annotations/label'
 require_relative '../model/annotations/custom'
 require_relative '../model/annotations/default'
-# require_relative '../model/annotations/ignore'
+require_relative '../model/annotations/ignore'
 # require_relative '../model/annotations/inline'
 # require_relative '../model/annotations/custom'
 
