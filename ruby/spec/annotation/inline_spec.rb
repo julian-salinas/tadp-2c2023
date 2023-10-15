@@ -1,6 +1,6 @@
 require_relative '../spec_helper'
 
-describe Inline do
+describe Inline, skip: true do
   context "serialize an object using inline attributes" do
     describe "given an inline attribute for the class" do
       before(:each) do

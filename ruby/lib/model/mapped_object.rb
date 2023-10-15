@@ -5,12 +5,12 @@ require_relative 'attribute'
 class MappedObject
 
   attr_reader :attributes
-  attr_accessor :child_or_children, :name, :ignore
+  attr_accessor :child_or_children, :name
 
   def initialize(name)
     @name = name
     @attributes = []
-    @child_or_children = [] # Analizar cambios
+    @child_or_children = []
   end
 
   def add_attribute(name, value)
