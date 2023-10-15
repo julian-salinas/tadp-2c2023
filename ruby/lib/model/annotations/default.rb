@@ -2,6 +2,9 @@ require_relative '../../utils/type_utils'
 require_relative '../../mapper/public_attributes_extractor'
 require_relative '../document'
 
+# atributo -> Attribute
+# raíz -> MappedObject
+
 class Default
   def serialize_object(thing)
     root_object = create_root(thing)
@@ -40,27 +43,22 @@ class Default
       end
     else
       # Aplicar anotaciones estado
-      attribute.value = Default.new.serialize_object(attribute.value)
+      attribute.value = Default.new.serialize_object(attribute.value) # attribute.value es un mappedobject
 
       # Aplicar anotaciones estudiante
-      apply_attribute_serializers(attribute_serializers, attribute.value)
-
+      apply_attribute_serializers(attribute_serializers, attribute, :value)
       unless attribute.value.ignore
         root_object.add_child(attribute.value)
       end
     end
   end
 
-  private def apply_attribute_serializers(attribute_serializers, attribute)
+  private def apply_attribute_serializers(attribute_serializers, attribute, getter = nil)
     unless attribute_serializers.nil?
       attribute_serializers.each do |serializer|
-        serializer.apply_over_attribute(attribute)
+        serializer.apply_over_attribute(attribute, getter)
       end
     end
-  end
-
-  private def get_class_serializer_or_nil(clazz)
-    clazz.metadata.serializers["root"]
   end
 
 end

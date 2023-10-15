@@ -11,7 +11,8 @@ class Ignore
     thing.ignore= true
   end
 
-  def apply_over_attribute(attribute)
-    attribute.ignore= true
+  def apply_over_attribute(attribute, getter = nil)
+    attribute_to_modify = getter ? attribute.send(getter) : attribute
+    attribute_to_modify.ignore= true
   end
 end
