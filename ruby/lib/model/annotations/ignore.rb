@@ -1,17 +1,13 @@
 # frozen_string_literal: true
 
 
-class Ignore < Default
-
-  def serialize_object(thing)
-    thing.ignore= true
-  end
+class Ignore
 
   def apply_over_root(thing)
-    thing.ignore= true
+    nil
   end
 
   def apply_over_attribute(attribute)
-    attribute.ignore= true
+    nil
   end
 end
