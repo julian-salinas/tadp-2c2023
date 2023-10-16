@@ -14,34 +14,6 @@ class Alumno
   def estado
     @estado
   end
-
-end
-
-✨Label✨("Estudiante")
-class AlumnoEstudiante
-  attr_reader :nombre, :legajo, :estado
-  def initialize(nombre, legajo, estado)
-    @nombre = nombre
-    @legajo = legajo
-    @estado = estado
-  end
-end
-
-✨Label✨("Pibardo")
-class AlumnoReBasado
-  attr_reader :nombre
-
-  ✨Label✨("numerito-que-no-se-acuerda")
-  attr_reader :legajo
-
-  ✨Label✨("esto-no-se-pregunta")
-  attr_reader :estado
-
-  def initialize(nombre, legajo, estado)
-    @nombre = nombre
-    @legajo = legajo
-    @estado = estado
-  end
 end
 
 class Estado
@@ -53,16 +25,23 @@ class Estado
   end
 end
 
-class AlumnoQueUsaInline
+✨Label✨("Estudiante")
+class AlumnoEstudiante < Alumno
+end
+
+✨Label✨("Pibardo")
+class AlumnoReBasado < Alumno
+  ✨Label✨("numerito-que-no-se-acuerda")
+  attr_reader :legajo
+
+  ✨Label✨("esto-no-se-pregunta")
+  attr_reader :estado
+end
+
+class AlumnoQueUsaInline < Alumno
 
   ✨Inline✨ {|campo| campo.upcase }
   attr_reader :nombre, :legajo
-  def initialize(nombre, legajo, telefono, estado)
-    @nombre = nombre
-    @legajo = legajo
-    @telefono = telefono
-    @estado = estado
-  end
 
   ✨Inline✨ {|estado| estado.es_regular }
   def estado
@@ -71,11 +50,19 @@ class AlumnoQueUsaInline
 end
 
 ✨Inline✨ {|estado| estado.es_regular } # Esto existe para que rompa
-class EstadoInlineado
-  attr_reader :finales_rendidos, :materias_aprobadas, :es_regular
-  def initialize(finales_rendidos, materias_aprobadas, es_regular)
-    @finales_rendidos = finales_rendidos
-    @es_regular = es_regular
-    @materias_aprobadas = materias_aprobadas
-  end
+class EstadoInlineado < Estado
 end
+
+class AlumnoConEstadoCustom < Alumno
+  ✨Label✨("situacion")
+  attr_reader :estado
+end
+
+✨Custom✨ do |estado|
+  regular { estado.es_regular }
+  pendientes { estado.materias_aprobadas - estado.finales_rendidos }
+end
+class EstadoCustom < Estado
+end
+
+

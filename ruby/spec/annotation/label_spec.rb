@@ -1,6 +1,7 @@
+require 'rspec'
 require_relative '../spec_helper'
 
-describe Label do
+RSpec.describe Label do
   context "serialize an object using labels" do
     describe "given a label for the class" do
       before(:each) do

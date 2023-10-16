@@ -1,11 +1,12 @@
+require 'rspec'
 require_relative '../spec_helper'
 
-describe Inline do
+RSpec.describe Inline do
   context "serialize an object using inline attributes" do
     describe "given an inline attribute for the class" do
       before(:each) do
         @un_estado = Estado.new(3, 5, true)
-        @un_alumno = AlumnoQueUsaInline.new("Matias","123456-7", "0303456", @un_estado)
+        @un_alumno = AlumnoQueUsaInline.new("Matias","123456-7", @un_estado)
       end
 
       it "automatic serialization gives expected output" do
@@ -20,7 +21,7 @@ describe Inline do
     describe "cant apply inline annotation to root" do
       before(:each) do
         @un_estado = EstadoInlineado.new(3, 5, true)
-        @un_alumno = AlumnoQueUsaInline.new("Matias","123456-7", "0303456", @un_estado)
+        @un_alumno = AlumnoQueUsaInline.new("Matias","123456-7", @un_estado)
       end
 
       it "automatic serialization gives expected output" do

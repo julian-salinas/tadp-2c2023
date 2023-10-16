@@ -3,8 +3,6 @@
 require 'rspec'
 require_relative '../spec_helper'
 
-
-
 RSpec.describe 'Ignore' do
   context 'given a class with an ignored attribute' do
 
