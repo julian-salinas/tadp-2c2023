@@ -15,11 +15,6 @@ class Inline
   end
 
   def apply_over_attribute(attribute)
-    if attribute.is_a? Attribute
-      attribute.value = @block.call(attribute.value)
-    else
-      attribute = Attribute.new(attribute.name, @block.call(attribute.value))
-      # seria ideal pisar la referencia de attribute pero estamos en el hdp de ruby
-    end
+    Attribute.new(attribute.name, @block.call(attribute.value))
   end
 end

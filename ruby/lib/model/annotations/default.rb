@@ -27,18 +27,22 @@ class Default
       Default.new.serialize_attribute(root_object, attribute, thing.class.metadata.serializers[attribute.name])
     end
   end
-
+  
   def serialize_attribute(root_object, attribute, attribute_serializers)
     if TypeUtils.is_primitive? attribute.value
       final_attribute = apply_attribute_serializers(attribute_serializers, attribute)
       if final_attribute.nil? then return end
       root_object.add_attribute(final_attribute.name, final_attribute.value)
     else
-      attribute.value = Default.new.serialize_object(attribute.value) # attribute.value es un mappedobject
+      attribute.value = Default.new.serialize_object(attribute.value)
       if attribute.value.nil? then return end
       final_attribute = apply_attribute_serializers(attribute_serializers, attribute)
       if final_attribute.nil? then return end
-      root_object.add_child(final_attribute.value)
+      if final_attribute.value.is_a? Root
+        root_object.add_child(final_attribute.value)
+      else
+        root_object.add_attribute(final_attribute.name, final_attribute.value)
+      end
     end
   end
 
