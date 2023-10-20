@@ -24,7 +24,6 @@ class Document
   end
 
   # Serialización automática
-
   def self.serialize(thing)
     root = Default.new.serialize_object(thing)
     document = Document.new
@@ -32,16 +31,4 @@ class Document
     document
   end
 
-  def to_mapped_object(thing)
-    mapped_object = MappedObject.new(thing.name)
-    attributes_list = PublicAttributesExtractor.list_public_attributes(thing.value)
-    attributes_list.each do |attribute|
-      if TypeUtils.is_primitive? attribute.value then
-        mapped_object.add_attribute(attribute.name, attribute.value)
-      else
-        mapped_object.add_child to_mapped_object(attribute)
-      end
-    end
-    mapped_object
-  end
 end

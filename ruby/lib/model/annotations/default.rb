@@ -9,39 +9,39 @@ require_relative '../root'
 
 class Default
   def serialize_object(thing)
-    root_object = create_root(thing)
+    root = create_root(thing)
     root_serializers = thing.class.metadata.serializers["root"]
-    final_root_object = apply_root_serializers(root_serializers, root_object)
-    serialize_attributes(thing, final_root_object)
-    final_root_object
+    final_root = apply_root_serializers(root_serializers, root)
+    serialize_attributes(final_root)
+    final_root
   end
 
   def create_root(thing)
-    Root.new(thing.class.name)
+    Root.new(thing.class.name, thing)
   end
 
-  def serialize_attributes(thing, root_object)
-    if root_object.nil? then return end
-    public_attributes = PublicAttributesExtractor.list_public_attributes(thing)
+  def serialize_attributes(root)
+    if root.nil? then return end
+    public_attributes = PublicAttributesExtractor.list_public_attributes(root.original_object)
     public_attributes.each do |attribute|
-      Default.new.serialize_attribute(root_object, attribute, thing.class.metadata.serializers[attribute.name])
+      Default.new.serialize_attribute(root, attribute, root.original_object.class.metadata.serializers[attribute.name])
     end
   end
   
-  def serialize_attribute(root_object, attribute, attribute_serializers)
+  def serialize_attribute(root, attribute, attribute_serializers)
     if TypeUtils.is_primitive? attribute.value
       final_attribute = apply_attribute_serializers(attribute_serializers, attribute)
       if final_attribute.nil? then return end
-      root_object.add_attribute(final_attribute.name, final_attribute.value)
+      root.add_attribute(final_attribute.name, final_attribute.value)
     else
       attribute.value = Default.new.serialize_object(attribute.value)
       if attribute.value.nil? then return end
       final_attribute = apply_attribute_serializers(attribute_serializers, attribute)
       if final_attribute.nil? then return end
       if final_attribute.value.is_a? Root
-        root_object.add_child(final_attribute.value)
+        root.add_child(final_attribute.value)
       else
-        root_object.add_attribute(final_attribute.name, final_attribute.value)
+        root.add_attribute(final_attribute.name, final_attribute.value)
       end
     end
   end
