@@ -65,4 +65,10 @@ end
 class EstadoCustom < Estado
 end
 
-
+✨Label✨("ya-no-se-que-poner")
+✨Custom✨ do |alumno|
+  sunombre { alumno.nombre }
+  sulegajo { alumno.legajo }
+end
+class AlumnoTodoRancio < Alumno
+end
