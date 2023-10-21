@@ -1,11 +1,12 @@
 name: Ruby specs
 on:
   pull_request:
-    branches:
-      - main
+    branches: [master, main]
+    types: [opened, synchronize]
   release:
     types:
       - created
+
 jobs:
   rspec-test:
     name: RSpec
