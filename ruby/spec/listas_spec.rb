@@ -12,6 +12,8 @@ RSpec.describe 'Listas' do
     @un_profesor_nuevo = Profesor.new([])
     @un_profesor_que_no_cargo_bien_los_cursos = Profesor.new(['123', '445', '3511'])
     @un_profesor_rebelde = Profesor.new([@tadp, '42', Alumno.new('Juan', '123', 'Libre')])
+    @un_cursed = Cursed.new([AlumnoTodoRancio.new('Juan', '123', 'Libre'), AlumnoTodoRancio.new('Juan', '123', 'Libre')])
+    @cursito = Cursito.new(['pablito', 'jorgito', 'parpadeo automatico desactivado'])
   end
 
   context 'when serializing an object containing a simple object list' do
@@ -49,6 +51,26 @@ RSpec.describe 'Listas' do
       expect(xml_doc.gsub(/[\t\n]+/, "")).to eq(expected_document)
     end
   end
+
+  context 'when serializing a non primitive objects list with annotations' do
+    it 'serializes all its children' do
+      doc = Document.serialize(@un_cursed)
+      xml_doc = doc.xml
+      puts xml_doc
+      expected_document = '<cursed><ya-no-se-que-poner><sunombre>"Juan"</sunombre><sulegajo>"123"</sulegajo></ya-no-se-que-poner><ya-no-se-que-poner><sunombre>"Juan"</sunombre><sulegajo>"123"</sulegajo></ya-no-se-que-poner></cursed>'
+      expect(xml_doc.gsub(/[\t\n]+/, "")).to eq(expected_document)
+    end
+  end
+
+  context 'when serializing a primitive objects list with annotations' do
+    it 'serializes all its children' do
+      doc = Document.serialize(@cursito)
+      xml_doc = doc.xml
+      puts xml_doc
+      expected_document = '<cursito><nene>"pablito"</nene><nene>"jorgito"</nene><nene>"parpadeo automatico desactivado"</nene></cursito>'
+      expect(xml_doc.gsub(/[\t\n]+/, "")).to eq(expected_document)
+    end
+  end
 end
 
 class Profesor
@@ -64,5 +86,20 @@ class Curso
   attr_reader :id
   def initialize(id)
     @id = id
+  end
+end
+
+class Cursed
+  attr_reader :alumnos
+  def initialize(alumnos)
+    @alumnos = alumnos
+  end
+end
+
+class Cursito
+  ✨Label✨("nene")
+  attr_reader :alumnos
+  def initialize(alumnos)
+    @alumnos = alumnos
   end
 end

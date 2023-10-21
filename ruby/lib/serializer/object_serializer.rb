@@ -47,17 +47,17 @@ class ObjectSerializer
   private def serialize_attribute_list(root, attribute, attribute_serializers)
     attribute.value.each { |list_element|
       if TypeUtils.is_primitive? list_element
-        #TODO Acá habría que serializar usando las anotaciones
-        #serialize_non_primitive_attr(root, list_element, attribute_serializers)
-
-        # Este método no toma en cuenta anotaciones 👇
-        primitive_child = Root.new(list_element.class.name, list_element)
-        primitive_child.add_child(list_element)
-        root.add_child(primitive_child)
+        primitive_child = generate_root_from_primitive(list_element)
+        final_attribute = apply_attribute_serializers(attribute_serializers, Attribute.new("_", primitive_child))
+        add_final_attribute(root, final_attribute)
       else
         serialize_attribute(root, Attribute.new(list_element.class.name, list_element), attribute_serializers)
       end
     }
+  end
+
+  private def generate_root_from_primitive(element)
+    Root.new(element.class.name, element).add_child(element)
   end
 
   private def serialize_non_primitive_attr(root, attribute, attribute_serializers)
@@ -65,6 +65,10 @@ class ObjectSerializer
     if attribute.value.nil? then return end
     final_attribute = apply_attribute_serializers(attribute_serializers, attribute)
     if final_attribute.nil? then return end # nil se tiene que poder serializar
+    add_final_attribute(root, final_attribute)
+  end
+
+  private def add_final_attribute(root, final_attribute)
     if final_attribute.value.is_a? Root
       root.add_child(final_attribute.value)
     else
