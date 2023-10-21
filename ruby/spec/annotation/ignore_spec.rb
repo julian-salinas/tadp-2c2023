@@ -47,6 +47,20 @@ RSpec.describe 'Ignore' do
     end
   end
 
+  context 'given a class with an ignored attribute and a nil attribute' do
+    before do
+      @un_estado = Estado.new(3, 5, true)
+      @un_alumno_sin_estado = AlumnoAtributoEstadoIgnorado.new(nil, "123456-8", @un_estado)
+    end
+
+    it 'the ignored attribute is not serialized' do
+      doc = Document.serialize(@un_alumno_sin_estado)
+      xml_doc = doc.xml
+      expected_document = '<alumnoAtributoEstadoIgnorado nombre= legajo="123456-8"/>'
+      expect(xml_doc.gsub(/[\t\n]+/, "")).to eq(expected_document)
+    end
+  end
+
 end
 
 # Clases auxiliares

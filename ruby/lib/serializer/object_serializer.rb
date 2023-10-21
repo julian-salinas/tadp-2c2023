@@ -10,6 +10,7 @@ require_relative '../model/root'
 class ObjectSerializer
   def serialize_object(thing)
     root = create_root(thing)
+    puts "Por serializar #{thing}"
     root_serializers = thing.class.metadata.serializers["root"]
     final_root = apply_root_serializers(root_serializers, root)
     serialize_attributes(final_root)
@@ -29,7 +30,7 @@ class ObjectSerializer
   end
   
   def serialize_attribute(root, attribute, attribute_serializers)
-    if TypeUtils.is_primitive? attribute.value
+    if TypeUtils.is_primitive? attribute.value or attribute.value.nil?
       serialize_primitive_attr(root, attribute, attribute_serializers)
     elsif TypeUtils.is_list? attribute.value
       serialize_attribute_list(root, attribute, attribute_serializers)
@@ -40,7 +41,7 @@ class ObjectSerializer
 
   private def serialize_primitive_attr(root, attribute, attribute_serializers)
     final_attribute = apply_attribute_serializers(attribute_serializers, attribute)
-    if final_attribute.nil? then return end
+    if final_attribute.value.nil? then return root.add_attribute(final_attribute.name, final_attribute.value) end
     if should_ignore? final_attribute then return end
     root.add_attribute(final_attribute.name, final_attribute.value)
   end
@@ -63,9 +64,8 @@ class ObjectSerializer
 
   private def serialize_non_primitive_attr(root, attribute, attribute_serializers)
     attribute.value = ObjectSerializer.new.serialize_object(attribute.value)
-    if attribute.value.nil? then return end
+    if attribute.value.nil? then return root.add_attribute(attribute.name, nil) end
     final_attribute = apply_attribute_serializers(attribute_serializers, attribute)
-    if final_attribute.nil? then return end # nil se tiene que poder serializar
     if should_ignore? final_attribute then return end
     add_final_attribute(root, final_attribute)
   end
@@ -73,6 +73,8 @@ class ObjectSerializer
   private def add_final_attribute(root, final_attribute)
     if final_attribute.value.is_a? Root
       root.add_child(final_attribute.value)
+    elsif final_attribute.nil?
+      root.add_child(nil)
     else
       root.add_attribute(final_attribute.name, final_attribute.value)
     end
