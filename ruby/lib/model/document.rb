@@ -6,7 +6,7 @@ require_relative '../utils/block_name_extractor'
 require_relative '../mapper/public_attributes_extractor'
 require_relative '../mapper/block_to_object_mapper'
 require_relative '../serializer/mapped_object_serializer'
-require_relative 'annotations/default'
+require_relative '../serializer/object_serializer'
 
 class Document
   attr_accessor :root_tag
@@ -25,7 +25,7 @@ class Document
 
   # Serialización automática
   def self.serialize(thing)
-    root = Default.new.serialize_object(thing)
+    root = ObjectSerializer.new.serialize_object(thing)
     document = Document.new
     document.root_tag = MappedObjectSerializer.serialize(root)
     document

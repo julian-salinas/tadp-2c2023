@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../default'
+require_relative '../../../serializer/object_serializer'
 require_relative 'custom_block_to_object_mapper'
 require_relative 'custom_children_builder'
 require_relative '../../../serializer/mapped_object_serializer'

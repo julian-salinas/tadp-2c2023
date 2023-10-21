@@ -1,13 +1,13 @@
-require_relative '../../utils/type_utils'
-require_relative '../../mapper/public_attributes_extractor'
-require_relative '../document'
-require_relative '../../utils/fold'
-require_relative '../root'
+require_relative '../utils/type_utils'
+require_relative '../mapper/public_attributes_extractor'
+require_relative '../model/document'
+require_relative '../utils/fold'
+require_relative '../model/root'
 
 # atributo -> Attribute
 # raíz -> MappedObject
 
-class Default
+class ObjectSerializer
   def serialize_object(thing)
     root = create_root(thing)
     root_serializers = thing.class.metadata.serializers["root"]
@@ -24,7 +24,7 @@ class Default
     if root.nil? then return end
     public_attributes = PublicAttributesExtractor.list_public_attributes(root.original_object)
     public_attributes.each do |attribute|
-      Default.new.serialize_attribute(root, attribute, root.original_object.class.metadata.serializers[attribute.name])
+      ObjectSerializer.new.serialize_attribute(root, attribute, root.original_object.class.metadata.serializers[attribute.name])
     end
   end
   
@@ -34,10 +34,10 @@ class Default
       if final_attribute.nil? then return end
       root.add_attribute(final_attribute.name, final_attribute.value)
     else
-      attribute.value = Default.new.serialize_object(attribute.value)
+      attribute.value = ObjectSerializer.new.serialize_object(attribute.value)
       if attribute.value.nil? then return end
       final_attribute = apply_attribute_serializers(attribute_serializers, attribute)
-      if final_attribute.nil? then return end
+      if final_attribute.nil? then return end # nil se tiene que poder serializar
       if final_attribute.value.is_a? Root
         root.add_child(final_attribute.value)
       else

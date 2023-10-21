@@ -14,7 +14,7 @@ class ChildrenBuilder
       @children.push(ret)
     end
     self
-    end
+  end
 
   private def method_missing(name, *args, **kwargs, &block)
     puts "children_builder #{name}, #{args}, #{kwargs}, #{block}"

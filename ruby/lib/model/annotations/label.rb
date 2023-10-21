@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../../utils/type_utils'
-require_relative 'default'
+require_relative '../../serializer/object_serializer'
 require_relative '../attribute'
 require_relative '../mapped_object'
 require_relative '../root'

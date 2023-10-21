@@ -7,9 +7,9 @@ require_relative './children_builder'
 
 class BlockToObjectMapper
 
-  def self.map(&block)
+  def self.map(*args, &block)
     mapper = new
-    mapper.instance_eval(&block)
+    mapper.instance_exec(*args, &block)
   end
 
   private def method_missing(name, *args, **kwargs, &block)
