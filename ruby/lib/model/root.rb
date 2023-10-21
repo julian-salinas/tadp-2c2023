@@ -14,4 +14,9 @@ class Root < MappedObject
     ignore
   end
 
+  def tail
+    # desprender la raíz
+    child_or_children[0]
+  end
+
 end
