@@ -72,3 +72,4 @@ end
 end
 class AlumnoTodoRancio < Alumno
 end
+

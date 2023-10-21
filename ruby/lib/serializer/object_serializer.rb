@@ -33,6 +33,16 @@ class ObjectSerializer
       final_attribute = apply_attribute_serializers(attribute_serializers, attribute)
       if final_attribute.nil? then return end
       root.add_attribute(final_attribute.name, final_attribute.value)
+    elsif TypeUtils.is_list? attribute.value
+      attribute.value.each { |list_element|
+        if TypeUtils.is_primitive? list_element
+          primitive_child = Root.new(list_element.class.name, list_element)
+          primitive_child.add_child(list_element)
+          root.add_child(primitive_child)
+        else
+          serialize_attribute(root, Attribute.new(list_element.class.name, list_element), attribute_serializers)
+        end
+      }
     else
       attribute.value = ObjectSerializer.new.serialize_object(attribute.value)
       if attribute.value.nil? then return end
