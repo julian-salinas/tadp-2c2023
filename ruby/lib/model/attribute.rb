@@ -10,4 +10,8 @@ class Attribute
     self
   end
 
+  def ignore?
+    ignore
+  end
+
 end

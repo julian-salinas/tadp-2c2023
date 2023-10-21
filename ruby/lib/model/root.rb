@@ -9,4 +9,8 @@ class Root < MappedObject
     @original_object = original_object
     super(name)
   end
+
+  def ignore?
+    ignore
+  end
 end

@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 
 
+
 class Ignore
 
   def apply_over_root(thing)
-    nil
+    thing.ignore = true
+    thing
   end
 
   def apply_over_attribute(attribute)
-    nil
+    attribute.ignore = true
+    attribute
   end
 end
