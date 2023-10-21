@@ -41,6 +41,7 @@ class ObjectSerializer
   private def serialize_primitive_attr(root, attribute, attribute_serializers)
     final_attribute = apply_attribute_serializers(attribute_serializers, attribute)
     if final_attribute.nil? then return end
+    if should_ignore? final_attribute then return end
     root.add_attribute(final_attribute.name, final_attribute.value)
   end
 
@@ -65,6 +66,7 @@ class ObjectSerializer
     if attribute.value.nil? then return end
     final_attribute = apply_attribute_serializers(attribute_serializers, attribute)
     if final_attribute.nil? then return end # nil se tiene que poder serializar
+    if should_ignore? final_attribute then return end
     add_final_attribute(root, final_attribute)
   end
 
@@ -74,6 +76,10 @@ class ObjectSerializer
     else
       root.add_attribute(final_attribute.name, final_attribute.value)
     end
+  end
+
+  private def should_ignore?(object)
+    object.ignore? || (object.value.respond_to?(:ignore?) && object.value.ignore?)
   end
 
   private def apply_attribute_serializers(attribute_serializers, attribute)

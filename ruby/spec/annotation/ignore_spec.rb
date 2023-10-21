@@ -46,6 +46,7 @@ RSpec.describe 'Ignore' do
       expect(xml_doc.gsub(/[\t\n]+/, "")).to eq(expected_document)
     end
   end
+
 end
 
 # Clases auxiliares
