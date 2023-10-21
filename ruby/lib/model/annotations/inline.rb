@@ -11,7 +11,7 @@ class Inline
   end
 
   def apply_over_root(root)
-    throw "Inline annotation can only be applied to attributes"
+    throw StandardError.new "Inline annotation can only be applied to attributes"
   end
 
   def apply_over_attribute(attribute)

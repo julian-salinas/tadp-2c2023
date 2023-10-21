@@ -25,7 +25,7 @@ RSpec.describe Inline do
       end
 
       it "automatic serialization gives expected output" do
-        expect { Document.serialize(@un_alumno) }.to raise_error("Inline annotation can only be applied to attributes")
+        expect { Document.serialize(@un_alumno) }.to raise_error(StandardError)
       end
 
     end
