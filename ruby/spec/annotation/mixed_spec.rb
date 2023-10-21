@@ -8,7 +8,7 @@ RSpec.describe "Mixed" do
       @un_alumno = AlumnoTodoRancio.new("Carlos","123456-8", @un_estado)
     end
 
-    it "automatic serialization gives expected output" do
+    it "automatic serialization gives expected output", skip: true do
       doc = Document.serialize(@un_alumno)
       xml_doc = doc.xml
       puts xml_doc

@@ -16,7 +16,6 @@ RSpec.describe Custom do
         expected_document = '<alumnoConEstadoCustom nombre="Matias" legajo="123456-7"><situacion><regular>true</regular><pendientes>2</pendientes></situacion></alumnoConEstadoCustom>'
         expect(xml_doc.gsub(/[\t\n]+/, "")).to eq(expected_document)
       end
-
     end
   end
 end

@@ -7,9 +7,10 @@ class ChildrenBuilder
 
   attr_reader :children
 
-  def initialize(&block)
+  def initialize(*args, &block)
     @children = []
-    ret = instance_eval(&block)
+    ret = instance_exec(*args, &block)
+    puts "Return value #{ret}"
     if TypeUtils.is_primitive? ret
       @children.push(ret)
     end
@@ -17,7 +18,7 @@ class ChildrenBuilder
   end
 
   private def method_missing(name, *args, **kwargs, &block)
-    puts "children_builder #{name}, #{args}, #{kwargs}, #{block}"
+    puts "ChildrenBuilder: method_missing #{name} #{args} #{kwargs} #{block}"
     mapped_object = MappedObject.new(name)
 
     kwargs.each do |key, value|

@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../../serializer/object_serializer'
-require_relative 'custom_block_to_object_mapper'
-require_relative 'custom_children_builder'
-require_relative '../../../serializer/mapped_object_serializer'
+require_relative '../../mapper/block_to_object_mapper'
 
 class Custom
   attr_reader :block
@@ -13,7 +10,7 @@ class Custom
   end
 
   def apply_over_root(root)
-    CustomBlockToObjectMapper.new(root).map(&@block) # Tiene efecto sobre root
+    BlockToObjectMapper.new(root).map(root.original_object, &@block) # Tiene efecto sobre root
     delete_attributes(root.original_object)
     root
   end

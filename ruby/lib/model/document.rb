@@ -11,12 +11,10 @@ require_relative '../serializer/object_serializer'
 class Document
   attr_accessor :root_tag
 
-  def initialize(&block)
-    if block_given?
-      root_object = BlockToObjectMapper.map(&block)
-      @root_tag = MappedObjectSerializer.serialize(root_object)
-      self
-    end
+  def initialize(root = nil, &block)
+    if not block_given? and root.nil? then raise StandardError.new("You must provide a block or a root to create a document") end
+    document_root = if root.nil? then BlockToObjectMapper.map_block(&block) else root end
+    @root_tag = MappedObjectSerializer.serialize(document_root)
   end
 
   def xml
@@ -26,9 +24,7 @@ class Document
   # Serialización automática
   def self.serialize(thing)
     root = ObjectSerializer.new.serialize_object(thing)
-    document = Document.new
-    document.root_tag = MappedObjectSerializer.serialize(root)
-    document
+    Document.new(root)
   end
 
 end
