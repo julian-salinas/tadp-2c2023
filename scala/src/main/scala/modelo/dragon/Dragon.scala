@@ -1,12 +1,14 @@
-package modelo
+package modelo.dragon
 
-import modelo.Dragon.dragonSoportaPesoDelVikingo
+import modelo.Vikingo
+import modelo.dragon.Dragon.dragonSoportaPesoDelVikingo
 
 case class Dragon (
                     velocidadBase: Double = 60.0,
                     danioBase: Double,
                     peso: Double,
                     requisitosParaSerMontado: List[(Dragon, Vikingo) => Boolean] = List(dragonSoportaPesoDelVikingo)
+                    //^ TODO: Esto recuerdo que estaba planteado distinto, all yours ^
                   ) {
   def puedeSerMontadoPor(vikingo: Vikingo): Boolean = {
     requisitosParaSerMontado.forall(_(this, vikingo))
@@ -15,6 +17,8 @@ case class Dragon (
   def pesoMaximoCarga(): Double = {
     peso * 0.2
   }
+
+  def danio(): Double = danioBase
 
 }
 

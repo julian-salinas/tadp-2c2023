@@ -1,10 +1,10 @@
 package modelo
 
 trait Item {
-
+  def danioAdicional() = 0.0
 }
 
-case class Arma(danioAdicional: Double) extends Item {
+case class Arma(override val danioAdicional: Double) extends Item {
 
 }
 

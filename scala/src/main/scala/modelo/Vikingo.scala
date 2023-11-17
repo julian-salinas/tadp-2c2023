@@ -1,5 +1,7 @@
 package modelo
 
+import modelo.dragon.Dragon
+
 case class Vikingo (
                     peso: Double,
                     velocidad: Double,
