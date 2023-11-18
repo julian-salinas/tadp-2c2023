@@ -9,4 +9,6 @@ trait Competidor {
 
   def cantidadDePescadoQuePuedeTransportar(): Double
 
+  def hambre(): Double
+
 }

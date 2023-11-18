@@ -9,7 +9,7 @@ case class Vikingo (
                     item: Option[Item],
                     hambre: Double
                   ) extends Competidor {
-  require(0 <= hambre && hambre <= 1)
+  require(0 <= hambre && hambre <= 100)
 
   def montar(dragon: Dragon): Competidor = {
     if(dragon.puedeSerMontadoPor(this)) {
@@ -19,7 +19,7 @@ case class Vikingo (
     }
   }
 
-  def incrementarHambre(variacion: Double): Vikingo = this.copy(hambre = Math.min(1, hambre + variacion))
+  def incrementarHambre(variacion: Double): Vikingo = this.copy(hambre = Math.min(hambre + variacion, 100))
 
   def danio(): Double = { this.barbarosidad + danioItem}
 
