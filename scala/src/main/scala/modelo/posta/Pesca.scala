@@ -1,6 +1,6 @@
 package modelo.posta
 
-import modelo.{Competidor, Vikingo}
+import modelo.Competidor
 
 case object Pesca extends Posta {
   def apply(competidores: List[Competidor]): List[Competidor] = {

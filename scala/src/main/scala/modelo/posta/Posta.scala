@@ -1,6 +1,6 @@
 package modelo.posta
 
-import modelo.{Competidor, Vikingo}
+import modelo.Competidor
 
 trait Posta extends (List[Competidor] => List[Competidor])
 
