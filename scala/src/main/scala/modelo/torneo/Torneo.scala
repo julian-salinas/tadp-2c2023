@@ -4,7 +4,7 @@ import modelo.Competidor
 import modelo.dragon.Dragon
 import modelo.posta.Posta
 
-case class Torneo(
+abstract case class Torneo(
                    var competidores: List[Competidor],
                    var postas: List[Posta],
                    var dragones: List[Dragon],
@@ -13,19 +13,14 @@ case class Torneo(
                    ) {
 
   def ganador(competidores: List[Competidor]): Competidor = {
-    this.criterioGanador(competidores)
+    criterioGanador(competidores)
   }
 
   def iniciar() = {
-    ???
-  }
-
-  def siguienteRonda() = {
-    val siguientePosta = siguientePosta()
-    siguientePosta match {
-      case Some(siguientePosta) => ???
-      case None => ???
-    }
+    // todo: que todos elijan montura
+    // todo: Filtrar a los que no podrían jugar la posta
+    // todo: Jugar la posta
+    // todo: Cansar a todos
   }
 
   def siguientePosta(): Option[Posta] = {
@@ -35,10 +30,9 @@ case class Torneo(
         postas = tail
         Some(head)
       case Nil =>
-        // Si no hay postas en la lista, devolver None
         None
     }
   }
 
-  def elegirDragones() = ???
+  def elegirMonturas() = ???
 }

@@ -1,5 +1,7 @@
 package modelo
 
+import modelo.posta.Posta
+
 trait Competidor {
   def velocidad(): Double
 
@@ -11,4 +13,5 @@ trait Competidor {
 
   def hambre(): Double
 
+  def puedePermitirseParticiparEn(posta: Posta): Boolean
 }

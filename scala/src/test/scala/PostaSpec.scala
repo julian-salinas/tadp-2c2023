@@ -1,4 +1,4 @@
-import modelo.posta.{Carrera, Combate, ParticiparEnPosta, Pesca}
+import modelo.posta.{Carrera, Combate, CansarVikingosPostPosta, Pesca}
 import modelo.{Arma, Competidor, Vikingo}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
@@ -46,7 +46,7 @@ class PostaSpec extends AnyFreeSpec {
     val vikingos: List[Vikingo] = List(vikingoLiviano, vikingoPesado, vikingoNi)
 
     "Incrementa el hambre en 5 para cada competidor" in {
-      val resultado: List[Competidor] = ParticiparEnPosta(Pesca, vikingos)
+      val resultado: List[Competidor] = CansarVikingosPostPosta(Pesca, vikingos)
       resultado.foreach(_.hambre shouldEqual (vikingoPesado.hambre + 5))
     }
   }
@@ -58,7 +58,7 @@ class PostaSpec extends AnyFreeSpec {
     val vikingos: List[Vikingo] = List(vikingoLento, vikingoNormal, vikingoRapido)
 
     "Incrementa el hambre en 1 para cada competidor" in {
-      val resultado: List[Competidor] = ParticiparEnPosta(Carrera, vikingos)
+      val resultado: List[Competidor] = CansarVikingosPostPosta(Carrera, vikingos)
       resultado.foreach(_.hambre shouldEqual (vikingoRapido.hambre + 1))
     }
   }
@@ -69,7 +69,7 @@ class PostaSpec extends AnyFreeSpec {
     val vikingos: List[Vikingo] = List(vikingoFuerte, vikingoDebil)
 
     "Incrementa el hambre en 10 para cada competidor" in {
-      val resultado: List[Competidor] = ParticiparEnPosta(Combate, vikingos)
+      val resultado: List[Competidor] = CansarVikingosPostPosta(Combate, vikingos)
       resultado.foreach(_.hambre shouldEqual (vikingoFuerte.hambre + 10))
     }
   }

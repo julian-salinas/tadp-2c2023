@@ -12,17 +12,18 @@ case object CrearPosta {
   }
 }
 
-case object ParticiparEnPosta extends ((Posta, List[Competidor]) => List[Competidor]) {
-  def apply(posta: Posta, competidores: List[Competidor]): List[Competidor] = {
-    val competidoresConHambreAumentado = posta match {
-      case Pesca =>
-        competidores.map(_.incrementarHambre(5))
-      case Combate =>
-        competidores.map(_.incrementarHambre(10))
-      case Carrera =>
-        competidores.map(_.incrementarHambre(1))
-      case _ => competidores
+case object CansancioPosta extends ((Posta) => Double) {
+  def apply(posta: Posta): Double = {
+    posta match {
+      case Pesca => 5
+      case Combate => 10
+      case Carrera => 1
     }
-    posta(competidoresConHambreAumentado)
+  }
+}
+
+case object CansarVikingosPostPosta extends ((Posta, List[Competidor]) => List[Competidor]) {
+  def apply(posta: Posta, competidores: List[Competidor]): List[Competidor] = {
+    competidores.map(_.incrementarHambre(CansancioPosta(posta)))
   }
 }
