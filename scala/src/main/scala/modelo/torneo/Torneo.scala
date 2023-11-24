@@ -4,7 +4,6 @@ import modelo.MejorMontura
 import modelo.competidor.{Competidor, Jinete, Vikingo}
 import modelo.dragon.Dragon
 import modelo.posta.Posta
-
 import scala.annotation.tailrec
 import scala.util.Try
 
@@ -13,7 +12,8 @@ abstract class Torneo(
                    postas: List[Posta],
                    dragones: List[Dragon],
                    criterioGanador: CriterioGanador,
-                   criterioSiguienteRonda: CriterioSiguienteRonda
+                   criterioSiguienteRonda: CriterioSiguienteRonda,
+                   criterioEleccionDeMonturas: List[Vikingo] => List[Vikingo] = identity // Por defecto, no hace ningún cambio
                    ) {
 
   // optional[todo]: mejorar este nombre
@@ -40,7 +40,7 @@ abstract class Torneo(
 
   private def elegirMonturas(vikingos: List[Vikingo], dragones: List[Dragon], posta: Posta): List[Competidor] = {
     var dragonesMutable = dragones
-    vikingos.map(vikingo => {
+    criterioEleccionDeMonturas(vikingos).map(vikingo => {
       val maybeDragon: Option[Dragon] = MejorMontura(vikingo, dragonesMutable, posta)
       dragonesMutable = dragonesMutable.filter(maybeDragon.getOrElse(false).equals(_))
       Try(maybeDragon.map(vikingo.montar).get).recover(_ => vikingo).get
