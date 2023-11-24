@@ -1,8 +1,8 @@
 name: Continuous Integration for Scala
 on:
   pull_request:
-    branches:
-      - main
+    branches: [master]
+    types: [opened, synchronize]
   release:
     types:
       - created
