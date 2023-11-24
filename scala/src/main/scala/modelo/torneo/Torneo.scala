@@ -1,20 +1,19 @@
 package modelo.torneo
 
-import modelo.competidor.Competidor
+import modelo.MejorMontura
+import modelo.competidor.{Competidor, Jinete, Vikingo}
 import modelo.dragon.Dragon
 import modelo.posta.Posta
 
+import scala.util.Try
+
 abstract class Torneo(
-                   competidores: List[Competidor],
-                   var postas: List[Posta],
+                   vikingos: List[Vikingo],
+                   postas: List[Posta],
                    dragones: List[Dragon],
                    criterioGanador: CriterioGanador,
                    criterioSiguienteRonda: CriterioSiguienteRonda
                    ) {
-
-  def ganador(competidores: List[Competidor]): Competidor = {
-    criterioGanador(competidores)
-  }
 
   def iniciar() = {
     // todo: que todos elijan montura
@@ -34,5 +33,28 @@ abstract class Torneo(
     }
   }
 
-  def elegirMonturas(): Nothing = ???
+  private def desarrollarPosta(vikingos: List[Vikingo], dragones: List[Dragon], postas: List[Posta]): Torneo = {
+    postas match {
+      case head :: tail => {
+        val resultado = head.aplicar(elegirMonturas(vikingos, dragones, head))
+        val nuevosVikingos = resultado.map {
+          case jinete: Jinete => jinete.vikingo
+          case vikingo: Vikingo => vikingo
+        }
+        desarrollarPosta(nuevosVikingos, dragones, tail)
+      }
+    }
+
+    //todo: mitades
+
+  }
+
+  def elegirMonturas(vikingos: List[Vikingo], dragones: List[Dragon], posta: Posta): List[Competidor] = {
+    var dragonesMutable = dragones
+    vikingos.map(vikingo => {
+      val maybeDragon: Option[Dragon] = MejorMontura(vikingo, dragonesMutable, posta)
+      dragonesMutable = dragonesMutable.filter(maybeDragon.getOrElse(false).equals(_))
+      Try(maybeDragon.map(vikingo.montar).get).recover(_ => vikingo).get
+    })
+  }
 }
