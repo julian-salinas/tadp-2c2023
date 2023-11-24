@@ -1,6 +1,6 @@
 package modelo.dragon
 
-import modelo.Vikingo
+import modelo.competidor.Vikingo
 
 class NadderMortifero(
                             velocidadBase: Double,

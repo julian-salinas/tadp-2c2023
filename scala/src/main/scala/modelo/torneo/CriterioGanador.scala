@@ -1,6 +1,6 @@
 package modelo.torneo
 
-import modelo.Competidor
+import modelo.competidor.Competidor
 
 trait CriterioGanador extends (List[Competidor] => Competidor)
 

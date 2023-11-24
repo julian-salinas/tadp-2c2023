@@ -1,4 +1,4 @@
-package modelo
+package modelo.competidor
 
 import modelo.dragon.Dragon
 import modelo.posta.Posta

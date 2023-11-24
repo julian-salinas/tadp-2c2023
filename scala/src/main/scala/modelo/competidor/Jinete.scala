@@ -1,7 +1,7 @@
-  package modelo
+  package modelo.competidor
 
-  import modelo.dragon.Dragon
-  import modelo.posta.Posta
+import modelo.dragon.Dragon
+import modelo.posta.Posta
 
   case class Jinete (vikingo: Vikingo, dragon: Dragon) extends Competidor {
     override def incrementarHambre(variacion: Double): Jinete = this.copy(vikingo = vikingo.incrementarHambre(variacion))

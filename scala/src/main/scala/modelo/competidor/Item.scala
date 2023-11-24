@@ -1,4 +1,4 @@
-package modelo
+package modelo.competidor
 
 trait Item {
   def danioAdicional() = 0.0
