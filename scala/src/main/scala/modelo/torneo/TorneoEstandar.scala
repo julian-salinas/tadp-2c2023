@@ -16,7 +16,4 @@ class TorneoEstandar(
     PrimeraMitad // criterioSiguienteRonda
   ) {
 
-  /*override def elegirMonturas(): Nothing = {
-    ???
-  }*/
 }
