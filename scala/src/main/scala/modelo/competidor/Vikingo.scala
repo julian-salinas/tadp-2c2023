@@ -36,5 +36,15 @@ case class Vikingo (
 
   override def cantidadDePescadoQuePuedeTransportar(): Double = this.peso + this.barbarosidad * 2
 
-  override def puedePermitirseParticiparEn(posta: Posta): Boolean = ???
+  override def puedePermitirseParticiparEn(posta: Posta): Boolean = posta.puedeParticipar(this)
+}
+
+//TODO test & agregar valores en los ???
+
+object Hipo extends Vikingo(???, ???, ???, Some(SistemaDeVuelo), 0)
+object Astrid extends Vikingo(???, ???, ???, Some(Arma(30.0)), 0)
+object Patan extends Vikingo(???, ???, ???, Some(Arma(100.0)), 0)
+object Patapez extends Vikingo(???, ???, ???, Some(Alimento(???)), 0) {
+  override def incrementarHambre(variacion: Double): Vikingo = super.incrementarHambre(variacion * 2 - item.get.alimento())
+  override def puedePermitirseParticiparEn(posta: Posta): Boolean = super.puedePermitirseParticiparEn(posta) && hambre <= 50
 }

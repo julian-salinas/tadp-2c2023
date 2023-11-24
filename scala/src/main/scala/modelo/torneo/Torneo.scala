@@ -18,7 +18,7 @@ abstract class Torneo(
 
   def iniciar() = {
     // todo: que todos elijan montura
-    // todo: Filtrar a los que no podrían jugar la posta
+    // todo: Filtrar a los que no podrían jugar la posta (usar competidor.puedePermitirseParticiparEn)
     // todo: Jugar la posta
     // todo: Cansar a todos
   }
