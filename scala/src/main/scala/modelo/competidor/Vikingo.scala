@@ -20,7 +20,8 @@ case class Vikingo (
     }
   }
 
-  def incrementarHambre(variacion: Double): Vikingo = this.copy(hambre = Math.min(hambre + variacion, 100))
+  //TODO: Hacer que el require tire excepción o prevenirlo limitándolo a 100? Pensar en los requisitos de admisión de las postas
+  def incrementarHambrePosta(variacion: Double): Vikingo = this.copy(hambre = Math.min(hambre + variacion, 100))
 
   def danio(): Double = { this.barbarosidad + danioItem}
 
@@ -45,6 +46,6 @@ object Hipo extends Vikingo(???, ???, ???, Some(SistemaDeVuelo), 0)
 object Astrid extends Vikingo(???, ???, ???, Some(Arma(30.0)), 0)
 object Patan extends Vikingo(???, ???, ???, Some(Arma(100.0)), 0)
 object Patapez extends Vikingo(???, ???, ???, Some(Alimento(???)), 0) {
-  override def incrementarHambre(variacion: Double): Vikingo = super.incrementarHambre(variacion * 2 - item.get.alimento())
+  override def incrementarHambrePosta(variacion: Double): Vikingo = super.incrementarHambrePosta(Math.max(variacion * 2 - item.get.alimento(), 0))
   override def puedePermitirseParticiparEn(posta: Posta): Boolean = super.puedePermitirseParticiparEn(posta) && hambre <= 50
 }

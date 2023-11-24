@@ -4,7 +4,7 @@ import modelo.dragon.Dragon
 import modelo.posta.Posta
 
   case class Jinete (vikingo: Vikingo, dragon: Dragon) extends Competidor {
-    override def incrementarHambre(variacion: Double): Jinete = this.copy(vikingo = vikingo.incrementarHambre(variacion))
+    override def incrementarHambrePosta(variacion: Double): Jinete = this.copy(vikingo = vikingo.incrementarHambrePosta(5))
 
     override def cantidadDePescadoQuePuedeTransportar(): Double = dragon.pesoMaximoCarga - vikingo.peso
 
