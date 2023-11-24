@@ -8,7 +8,7 @@ trait Competidor {
 
   def danio(): Double
 
-  def incrementarHambre(variacion: Double): Competidor
+  def incrementarHambrePosta(variacion: Double): Competidor
 
   def cantidadDePescadoQuePuedeTransportar(): Double
 

@@ -9,5 +9,5 @@ case class Carrera(
                     distanciaKm: Int
                   ) extends Posta(
   criterioPuntaje = competidor => competidor.velocidad(),
-  efectos = competidor => competidor.incrementarHambre(distanciaKm)
+  efectos = competidor => competidor.incrementarHambrePosta(distanciaKm)
 ) {}

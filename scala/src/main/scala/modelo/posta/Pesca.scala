@@ -9,5 +9,5 @@ case class Pesca(
                   criterioAdmision: Competidor => Boolean = criterioAdmisionNulo
                 ) extends Posta(
       criterioPuntaje = competidor => competidor.cantidadDePescadoQuePuedeTransportar(),
-      efectos = competidor => competidor.incrementarHambre(5)
+      efectos = competidor => competidor.incrementarHambrePosta(5)
 )

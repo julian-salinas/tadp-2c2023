@@ -9,5 +9,5 @@ case class Combate(
                     criterioAdmision: Competidor => Boolean = criterioAdmisionNulo
                   ) extends Posta(
   criterioPuntaje = competidor => competidor.danio(),
-  efectos = competidor => competidor.incrementarHambre(10)
+  efectos = competidor => competidor.incrementarHambrePosta(10)
 ) {}
