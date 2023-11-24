@@ -1,5 +1,6 @@
 package modelo
 
+import modelo.dragon.Dragon
 import modelo.posta.Posta
 
 trait Competidor {
@@ -14,4 +15,6 @@ trait Competidor {
   def hambre(): Double
 
   def puedePermitirseParticiparEn(posta: Posta): Boolean
+
+  def montar(dragon: Dragon): Competidor = ???
 }

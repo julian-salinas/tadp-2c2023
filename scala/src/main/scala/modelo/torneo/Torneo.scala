@@ -34,5 +34,5 @@ abstract class Torneo(
     }
   }
 
-  def elegirMonturas() = ???
+  def elegirMonturas(): Nothing = ???
 }

@@ -1,6 +1,7 @@
 package modelo
 
 import modelo.dragon.Dragon
+import modelo.posta.Posta
 
 case class Vikingo (
                     peso: Double,
@@ -11,7 +12,7 @@ case class Vikingo (
                   ) extends Competidor {
   require(0 <= hambre && hambre <= 100)
 
-  def montar(dragon: Dragon): Competidor = {
+  override def montar(dragon: Dragon): Competidor = {
     if(dragon.puedeSerMontadoPor(this)) {
       Jinete(this, dragon)
     } else {
@@ -34,4 +35,6 @@ case class Vikingo (
   }
 
   override def cantidadDePescadoQuePuedeTransportar(): Double = this.peso + this.barbarosidad * 2
+
+  override def puedePermitirseParticiparEn(posta: Posta): Boolean = ???
 }
