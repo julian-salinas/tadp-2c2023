@@ -4,12 +4,12 @@ import modelo.Competidor
 import modelo.dragon.Dragon
 import modelo.posta.Posta
 
-abstract case class Torneo(
-                   var competidores: List[Competidor],
+abstract class Torneo(
+                   competidores: List[Competidor],
                    var postas: List[Posta],
-                   var dragones: List[Dragon],
-                   val criterioGanador: CriterioGanador,
-                   val criterioSiguienteRonda: CriterioSiguienteRonda
+                   dragones: List[Dragon],
+                   criterioGanador: CriterioGanador,
+                   criterioSiguienteRonda: CriterioSiguienteRonda
                    ) {
 
   def ganador(competidores: List[Competidor]): Competidor = {

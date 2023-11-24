@@ -4,11 +4,11 @@ import modelo.Competidor
 import modelo.dragon.Dragon
 import modelo.posta.Posta
 
-case class TorneoEstandar(
-                           var competidores: List[Competidor],
-                           var postas: List[Posta],
-                           var dragones: List[Dragon]
-                         ) extends Torneo(
+class TorneoEstandar(
+                     competidores: List[Competidor],
+                     postas: List[Posta],
+                     dragones: List[Dragon]
+                     ) extends Torneo(
   competidores,
   postas,
   dragones,
