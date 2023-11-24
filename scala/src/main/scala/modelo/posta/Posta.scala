@@ -1,11 +1,10 @@
 package modelo.posta
 
 import modelo.competidor.Competidor
-import modelo.posta.Posta.criterioAdmisionNulo
 
 class Posta(
              criterioPuntaje: Competidor => Double,
-             criterioAdmision: Competidor => Boolean = criterioAdmisionNulo,
+             criterioAdmision: Competidor => Boolean = _ => true,
              efectos: Competidor => Competidor) {
   def ordenarSegunResultado (competidores: List[Competidor]): List[Competidor] = {
     competidores.sortWith((a, b) => esMejorQue(a, b))
@@ -27,8 +26,4 @@ class Posta(
     ordenarSegunResultado(competidores.filter(puedeParticipar)).map(efectos)
   }
 
-}
-
-object Posta {
-  def criterioAdmisionNulo: Competidor => Boolean = _ => true
 }

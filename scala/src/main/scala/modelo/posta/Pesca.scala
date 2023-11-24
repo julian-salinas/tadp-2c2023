@@ -1,13 +1,12 @@
 package modelo.posta
 
-import modelo.competidor.Competidor
-import modelo.posta.Posta.criterioAdmisionNulo
 
 // Clase ya que puede cambiar el criterio de admisión como se enuncia al final de la hoja 3/5 del enunciado
 
 case class Pesca(
-                  criterioAdmision: Competidor => Boolean = criterioAdmisionNulo
+                pesoMinimo: Double = 0.0
                 ) extends Posta(
       criterioPuntaje = competidor => competidor.cantidadDePescadoQuePuedeTransportar(),
-      efectos = competidor => competidor.incrementarHambre(5)
-)
+      efectos = competidor => competidor.incrementarHambrePosta(5),
+      criterioAdmision = competidor => competidor.cantidadDePescadoQuePuedeTransportar() > pesoMinimo //TODO test
+    ) {}
