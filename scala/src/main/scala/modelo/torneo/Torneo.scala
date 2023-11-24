@@ -5,6 +5,7 @@ import modelo.competidor.{Competidor, Jinete, Vikingo}
 import modelo.dragon.Dragon
 import modelo.posta.Posta
 
+import scala.annotation.tailrec
 import scala.util.Try
 
 abstract class Torneo(
@@ -15,25 +16,14 @@ abstract class Torneo(
                    criterioSiguienteRonda: CriterioSiguienteRonda
                    ) {
 
-  def iniciar() = {
-    // todo: que todos elijan montura
-    // todo: Filtrar a los que no podrían jugar la posta (usar competidor.puedePermitirseParticiparEn)
-    // todo: Jugar la posta
-    // todo: Cansar a todos
+  // optional[todo]: mejorar este nombre
+  def iniciarTorneo(): Unit = {
+    desarrollar(vikingos, dragones, postas);
   }
 
-  def siguientePosta(): Option[Posta] = {
-    postas match {
-      case head :: tail =>
-        // Si hay al menos una posta en la lista, devolver la primera y actualizar la lista
-        postas = tail
-        Some(head)
-      case Nil =>
-        None
-    }
-  }
-
-  private def desarrollarPosta(vikingos: List[Vikingo], dragones: List[Dragon], postas: List[Posta]): Torneo = {
+  // todo: mejorar este nombre
+  @tailrec // q se yo me dijo el ide que lo agregue
+  private def desarrollar(vikingos: List[Vikingo], dragones: List[Dragon], postas: List[Posta]): Vikingo = {
     postas match {
       case head :: tail => {
         val resultado = head.aplicar(elegirMonturas(vikingos, dragones, head))
@@ -41,15 +31,14 @@ abstract class Torneo(
           case jinete: Jinete => jinete.vikingo
           case vikingo: Vikingo => vikingo
         }
-        desarrollarPosta(nuevosVikingos, dragones, tail)
+        desarrollar(criterioSiguienteRonda(nuevosVikingos), dragones, tail)
       }
+      case Nil =>
+        criterioGanador(vikingos)
     }
-
-    //todo: mitades
-
   }
 
-  def elegirMonturas(vikingos: List[Vikingo], dragones: List[Dragon], posta: Posta): List[Competidor] = {
+  private def elegirMonturas(vikingos: List[Vikingo], dragones: List[Dragon], posta: Posta): List[Competidor] = {
     var dragonesMutable = dragones
     vikingos.map(vikingo => {
       val maybeDragon: Option[Dragon] = MejorMontura(vikingo, dragonesMutable, posta)

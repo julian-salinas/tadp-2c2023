@@ -1,17 +1,17 @@
 package modelo.torneo
 
-import modelo.competidor.Competidor
+import modelo.competidor.Vikingo
 
-trait CriterioSiguienteRonda extends (List[Competidor] => List[Competidor])
+trait CriterioSiguienteRonda extends (List[Vikingo] => List[Vikingo])
 
 case object PrimeraMitad extends CriterioSiguienteRonda {
-  def apply(competidores: List[Competidor]): List[Competidor] = {
+  def apply(competidores: List[Vikingo]): List[Vikingo] = {
     competidores.take(competidores.length / 2)
   }
 }
 
 case object UltimaMitad extends CriterioSiguienteRonda {
-  def apply(competidores: List[Competidor]): List[Competidor] = {
+  def apply(competidores: List[Vikingo]): List[Vikingo] = {
     competidores.takeRight(competidores.length / 2)
   }
 }
