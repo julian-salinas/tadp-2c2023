@@ -9,7 +9,7 @@ case class Dragon (
                     barbarosidadNecesariaParaMontarlo: Double
                   ) {
   def puedeSerMontadoPor(vikingo: Vikingo): Boolean = {
-    vikingo.barbarosidad > barbarosidadNecesariaParaMontarlo
+    vikingo.barbarosidad > barbarosidadNecesariaParaMontarlo && vikingo.peso <= pesoMaximoCarga()
   }
 
   def pesoMaximoCarga(): Double = {

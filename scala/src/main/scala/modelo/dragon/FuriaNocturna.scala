@@ -1,6 +1,6 @@
 package modelo.dragon
 
-import modelo.competidor.Vikingo
+import modelo.competidor.{SistemaDeVuelo, Vikingo}
 
 class FuriaNocturna(
   velocidadBase: Double,
@@ -13,12 +13,16 @@ class FuriaNocturna(
     peso,
     barbarosidadNecesariaParaMontarlo) {
 
-  override def puedeSerMontadoPor(vikingo: Vikingo): Boolean = {
-    super.puedeSerMontadoPor(vikingo)
-    // todo: && vikingo.item.isInstanceOf(SistemaDeVuelo) o algo así
-  }
-
   override def velocidad(): Double = {
     super.velocidad() * 3
+  }
+}
+
+object Chimuelo extends FuriaNocturna(???, ???, ???, ???) {
+  override def puedeSerMontadoPor(vikingo: Vikingo): Boolean = {
+    vikingo match {
+      case Vikingo(_, _, _, Some(SistemaDeVuelo), _) => super.puedeSerMontadoPor(vikingo)
+      case _ => false
+    }
   }
 }

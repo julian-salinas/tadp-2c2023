@@ -13,7 +13,6 @@ class NadderMortifero(
   barbarosidadNecesariaParaMontarlo) {
 
   override def puedeSerMontadoPor(vikingo: Vikingo): Boolean = {
-    super.puedeSerMontadoPor(vikingo)
-    // todo: && vikingo.danio < danio o algo así
+    super.puedeSerMontadoPor(vikingo) && vikingo.danio < this.danio
   }
 }

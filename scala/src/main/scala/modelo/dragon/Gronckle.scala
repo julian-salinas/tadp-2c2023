@@ -1,7 +1,5 @@
 package modelo.dragon
 
-import modelo.competidor.Vikingo
-
 class Gronckle(
                      velocidadBase: Double = 60.0,
                      danioBase: Double,
@@ -22,8 +20,5 @@ class Gronckle(
     super.velocidad() / 2
   }
 
-  override def puedeSerMontadoPor(vikingo: Vikingo): Boolean = {
-    super.puedeSerMontadoPor(vikingo)
-    // todo: && vikingo.peso < pesoQuePuedeSoportar o algo así
-  }
+  override def pesoMaximoCarga(): Double = pesoQuePuedeSoportar
 }
