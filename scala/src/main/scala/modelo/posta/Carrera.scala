@@ -8,6 +8,6 @@ case class Carrera(
                     criterioAdmision: Competidor => Boolean = criterioAdmisionNulo,
                     distanciaKm: Int
                   ) extends Posta(
-  criteiroPuntaje = competidor => competidor.velocidad(),
+  criterioPuntaje = competidor => competidor.velocidad(),
   efectos = competidor => competidor.incrementarHambre(distanciaKm)
 ) {}

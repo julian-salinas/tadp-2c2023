@@ -4,9 +4,9 @@ import modelo.competidor.Competidor
 import modelo.posta.Posta.criterioAdmisionNulo
 
 class Posta(
-                  criteiroPuntaje: Competidor => Double,
-                  criterioAdmision: Competidor => Boolean = criterioAdmisionNulo,
-                  efectos: Competidor => Competidor) {
+             criterioPuntaje: Competidor => Double,
+             criterioAdmision: Competidor => Boolean = criterioAdmisionNulo,
+             efectos: Competidor => Competidor) {
   def ordenarSegunResultado (competidores: List[Competidor]): List[Competidor] = {
     competidores.sortWith((a, b) => esMejorQue(a, b))
   }
@@ -16,7 +16,7 @@ class Posta(
   }
 
   def obtenerPuntaje(competidor: Competidor): Double = {
-    criteiroPuntaje(competidor)
+    criterioPuntaje(competidor)
   }
 
   def puedeParticipar(competidor: Competidor): Boolean = {

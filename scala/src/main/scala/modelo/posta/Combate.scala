@@ -8,6 +8,6 @@ import modelo.posta.Posta.criterioAdmisionNulo
 case class Combate(
                     criterioAdmision: Competidor => Boolean = criterioAdmisionNulo
                   ) extends Posta(
-  criteiroPuntaje = competidor => competidor.danio(),
+  criterioPuntaje = competidor => competidor.danio(),
   efectos = competidor => competidor.incrementarHambre(10)
 ) {}
