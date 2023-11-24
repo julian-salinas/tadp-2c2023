@@ -1,5 +1,6 @@
 package modelo.dragon
-import modelo.Vikingo
+
+import modelo.competidor.Vikingo
 
 class Gronckle(
                      velocidadBase: Double = 60.0,

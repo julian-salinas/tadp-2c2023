@@ -1,5 +1,5 @@
+import modelo.competidor.{Arma, Item, Jinete, Vikingo}
 import modelo.dragon.Dragon
-import modelo.{Arma, Item, Jinete, Vikingo}
 import org.scalatest.matchers.should.Matchers._
 import org.scalatest.freespec.AnyFreeSpec
 

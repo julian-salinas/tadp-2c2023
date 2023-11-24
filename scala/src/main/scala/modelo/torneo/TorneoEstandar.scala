@@ -1,6 +1,6 @@
 package modelo.torneo
 
-import modelo.Competidor
+import modelo.competidor.Competidor
 import modelo.dragon.Dragon
 import modelo.posta.Posta
 

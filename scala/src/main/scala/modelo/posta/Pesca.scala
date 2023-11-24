@@ -1,15 +1,13 @@
 package modelo.posta
 
-import modelo.Competidor
+import modelo.competidor.Competidor
+import modelo.posta.Posta.criterioAdmisionNulo
 
-case object Pesca extends Posta {
-  def apply(competidores: List[Competidor]): List[Competidor] = {
-    CrearPosta(PuedeLevantarMas, competidores)
-  }
-}
+// Clase ya que puede cambiar el criterio de admisión como se enuncia al final de la hoja 3/5 del enunciado
 
-case object PuedeLevantarMas extends Actividad {
-  def apply(unCompetidor: Competidor, otroCompetidor: Competidor): Boolean = {
-    unCompetidor.cantidadDePescadoQuePuedeTransportar() > otroCompetidor.cantidadDePescadoQuePuedeTransportar()
-  }
-}
+case class Pesca(
+                  criterioAdmision: Competidor => Boolean = criterioAdmisionNulo
+                ) extends Posta(
+      criteiroPuntaje = competidor => competidor.cantidadDePescadoQuePuedeTransportar(),
+      efectos = competidor => competidor.incrementarHambre(5)
+)

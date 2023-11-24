@@ -1,15 +1,13 @@
 package modelo.posta
 
-import modelo.Competidor
+import modelo.competidor.Competidor
+import modelo.posta.Posta.criterioAdmisionNulo
 
-case object Carrera extends Posta {
-  def apply(competidores: List[Competidor]): List[Competidor] = {
-    CrearPosta(EsMasRapido, competidores)
-  }
-}
-
-case object EsMasRapido extends Actividad {
-  def apply(unCompetidor: Competidor, otroCompetidor: Competidor): Boolean = {
-    unCompetidor.velocidad() > otroCompetidor.velocidad()
-  }
-}
+// Es una clase porque su efecto depende de la longitud de la misma, y pasa lo mismo que en las otras
+case class Carrera(
+                    criterioAdmision: Competidor => Boolean = criterioAdmisionNulo,
+                    distanciaKm: Int
+                  ) extends Posta(
+  criteiroPuntaje = competidor => competidor.velocidad(),
+  efectos = competidor => competidor.incrementarHambre(distanciaKm)
+) {}
