@@ -48,7 +48,7 @@ class PostaSpec extends AnyFreeSpec {
     val vikingos: List[Competidor] = List(vikingoLiviano, vikingoPesado, vikingoNi)
 
     "Incrementa el hambre en 5 para cada competidor" in {
-      val resultado: List[Competidor] = Pesca().aplicar(vikingos)
+      val resultado: List[Competidor] = Pesca().competir(vikingos)
       resultado.foreach(_.hambre shouldEqual (vikingoPesado.hambre + 5))
     }
   }
@@ -60,7 +60,7 @@ class PostaSpec extends AnyFreeSpec {
     val vikingos: List[Vikingo] = List(vikingoLento, vikingoNormal, vikingoRapido)
 
     "Incrementa el hambre en 1 para cada competidor" in {
-      val resultado: List[Competidor] = Carrera(distanciaKm = 1).aplicar(vikingos)
+      val resultado: List[Competidor] = Carrera(distanciaKm = 1).competir(vikingos)
       resultado.foreach(_.hambre shouldEqual (vikingoRapido.hambre + 1))
     }
   }
@@ -71,7 +71,7 @@ class PostaSpec extends AnyFreeSpec {
     val vikingos: List[Vikingo] = List(vikingoFuerte, vikingoDebil)
 
     "Incrementa el hambre en 10 para cada competidor" in {
-      val resultado: List[Competidor] = Combate().aplicar(vikingos)
+      val resultado: List[Competidor] = Combate().competir(vikingos)
       resultado.foreach(_.hambre shouldEqual (vikingoFuerte.hambre + 10))
     }
   }

@@ -22,7 +22,7 @@ class Posta(
     criterioAdmision(competidor) && efectos(competidor).hambre() < 100
   }
 
-  def aplicar(competidores: List[Competidor]): List[Competidor] = {
+  def competir(competidores: List[Competidor]): List[Competidor] = {
     ordenarSegunResultado(competidores.filter(puedeParticipar)).map(efectos)
   }
 

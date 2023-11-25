@@ -21,7 +21,7 @@ class FuriaNocturna(
 object Chimuelo extends FuriaNocturna(50, 20, 100, 80) {
   override def puedeSerMontadoPor(vikingo: Vikingo): Boolean = {
     vikingo match {
-      case Vikingo(_, _, _, Some(SistemaDeVuelo), _) => super.puedeSerMontadoPor(vikingo)
+      case Vikingo(_, _, _, Some(SistemaDeVuelo), _, _) => super.puedeSerMontadoPor(vikingo)
       case _ => false
     }
   }
