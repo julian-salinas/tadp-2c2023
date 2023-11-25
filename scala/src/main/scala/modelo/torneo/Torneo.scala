@@ -17,13 +17,13 @@ abstract class Torneo(
                    ) {
 
   // optional[todo]: mejorar este nombre
-  def iniciarTorneo(): Unit = {
-    desarrollar(vikingos, dragones, postas);
+  def iniciarTorneo(): Option[Vikingo] = {
+    desarrollar(vikingos, dragones, postas)
   }
 
   // todo: mejorar este nombre
   @tailrec // q se yo me dijo el ide que lo agregue
-  private def desarrollar(vikingos: List[Vikingo], dragones: List[Dragon], postas: List[Posta]): Vikingo = {
+  private def desarrollar(vikingos: List[Vikingo], dragones: List[Dragon], postas: List[Posta]): Option[Vikingo] = {
     postas match {
       case head :: tail => {
         val resultado = head.aplicar(elegirMonturas(vikingos, dragones, head))
