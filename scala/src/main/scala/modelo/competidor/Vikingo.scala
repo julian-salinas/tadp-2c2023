@@ -8,7 +8,7 @@ case class Vikingo (
                     velocidad: Double,
                     barbarosidad: Int,
                     item: Option[Item],
-                    hambre: Double
+                    hambre: Double = 0
                   ) extends Competidor {
   require(0 <= hambre && hambre <= 100)
 
@@ -38,12 +38,11 @@ case class Vikingo (
 
 }
 
-//TODO test & agregar valores en los ???
-
-object Hipo extends Vikingo(???, ???, ???, Some(SistemaDeVuelo), 0)
-object Astrid extends Vikingo(???, ???, ???, Some(Arma(30.0)), 0)
-object Patan extends Vikingo(???, ???, ???, Some(Arma(100.0)), 0)
-object Patapez extends Vikingo(???, ???, ???, Some(Alimento(???)), 0) {
+//TODO test
+object Hipo extends Vikingo(60, 20, 30, Some(SistemaDeVuelo))
+object Astrid extends Vikingo(60, 30, 50, Some(Arma(30.0)))
+object Patan extends Vikingo(100, 10, 70, Some(Arma(100.0)))
+object Patapez extends Vikingo(120, 5, 150, Some(Alimento(10))) {
   override def incrementarHambrePosta(variacion: Double): Vikingo = super.incrementarHambrePosta(variacion * 2 - item.get.alimento())
   override def puedePermitirseParticiparEn(posta: Posta): Boolean = super.puedePermitirseParticiparEn(posta) && hambre <= 50
 }

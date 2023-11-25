@@ -1,11 +1,11 @@
 package modelo.torneo
 
-import modelo.competidor.Competidor
+import modelo.competidor.{Competidor, Vikingo}
 import modelo.dragon.Dragon
 import modelo.posta.Posta
 
 class TorneoEstandar(
-    competidores: List[Competidor],
+    competidores: List[Vikingo],
     postas: List[Posta],
     dragones: List[Dragon]
   ) extends Torneo(
@@ -16,7 +16,4 @@ class TorneoEstandar(
     PrimeraMitad // criterioSiguienteRonda
   ) {
 
-  override def elegirMonturas(): Nothing = {
-    ???
-  }
 }
