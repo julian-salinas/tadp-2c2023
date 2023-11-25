@@ -8,8 +8,8 @@ class TorneoEstandar(
     postas: List[Posta],
   ) extends Torneo(
     postas,
-    Primero, // criterioGanador
-    PrimeraMitad // criterioSiguienteRonda
+    PrimeroGanador,
+    PrimeraMitadPasaDeRonda
   ) {
 
 }
