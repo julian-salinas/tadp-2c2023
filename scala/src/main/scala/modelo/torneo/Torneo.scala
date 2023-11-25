@@ -11,18 +11,27 @@ abstract class Torneo(
                    postas: List[Posta],
                    criterioGanador: CriterioGanador,
                    criterioSiguienteRonda: CriterioSiguienteRonda,
+                   criterioDragonesDisponibles: Dragon => Boolean = _ => true,
                    criterioEleccionDeMonturas: List[Vikingo] => List[Vikingo] = identity // Por defecto, no hace ningún cambio
                    ) {
-
-  def iniciarTorneo(vikingos: List[Vikingo], dragones: List[Dragon]): Option[Vikingo] = {
-    desarrollarPosta(vikingos, dragones, postas)
+  def iniciarTorneo(vikingos: List[Vikingo], dragones: List[Dragon]): Option[GanadorTorneo] = {
+    desarrollarPosta(vikingos, dragones.filter(criterioDragonesDisponibles), postas)
   }
 
   @tailrec
-  private def desarrollarPosta(vikingos: List[Vikingo], dragones: List[Dragon], postas: List[Posta]): Option[Vikingo] = {
+  private def desarrollarPosta(vikingos: List[Vikingo], dragones: List[Dragon], postas: List[Posta]): Option[GanadorTorneo] = {
     postas match {
       case head :: tail =>
-        val resultado = head.aplicar(elegirMonturas(vikingos, dragones, head))
+        if (vikingos.length == 1) {
+          //Queda un solo vikingo
+          return Some(vikingos.head)
+        }
+        val participantes = elegirMonturas(vikingos, dragones, head)
+        if (!participantes.exists(_.puedePermitirseParticiparEn(head))) {
+          // No hay ganador y finaliza el torneo
+          return None
+        }
+        val resultado = head.competir(participantes)
         val nuevosVikingos = resultado.map {
           case jinete: Jinete => jinete.vikingo
           case vikingo: Vikingo => vikingo

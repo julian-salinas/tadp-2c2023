@@ -1,7 +1,7 @@
 import modelo.competidor.{Arma, Vikingo}
 import modelo.dragon.Dragon
 import modelo.posta.{Combate, Pesca}
-import modelo.torneo.{PrimeraMitad, Primero, Torneo, TorneoEstandar}
+import modelo.torneo.{PrimeraMitadPasaDeRonda, PrimeroGanador, Torneo, TorneoEstandar}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 

@@ -2,14 +2,16 @@ package modelo.competidor
 
 import modelo.dragon.Dragon
 import modelo.posta.Posta
+import modelo.torneo.GanadorTorneo
 
 case class Vikingo (
                     peso: Double,
                     velocidad: Double,
                     barbarosidad: Int,
                     item: Option[Item],
-                    hambre: Double = 0
-                  ) extends Competidor {
+                    hambre: Double = 0,
+                    equipo: Option[Equipo] = None
+                  ) extends Competidor with GanadorTorneo {
   require(0 <= hambre && hambre <= 100)
 
   def montar(dragon: Dragon): Competidor = {
