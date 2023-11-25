@@ -25,14 +25,13 @@ abstract class Torneo(
   @tailrec // q se yo me dijo el ide que lo agregue
   private def desarrollar(vikingos: List[Vikingo], dragones: List[Dragon], postas: List[Posta]): Option[Vikingo] = {
     postas match {
-      case head :: tail => {
+      case head :: tail =>
         val resultado = head.aplicar(elegirMonturas(vikingos, dragones, head))
         val nuevosVikingos = resultado.map {
           case jinete: Jinete => jinete.vikingo
           case vikingo: Vikingo => vikingo
         }
         desarrollar(criterioSiguienteRonda(nuevosVikingos), dragones, tail)
-      }
       case Nil =>
         criterioGanador(vikingos)
     }
