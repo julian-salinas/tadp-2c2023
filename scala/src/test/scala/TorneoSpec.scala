@@ -17,10 +17,10 @@ class TorneoSpec extends AnyFreeSpec {
     val pesca = Pesca()
     val combate = Combate(4)
 
-    val torneo: Torneo = new TorneoEstandar(List(laCabra, remisero), List(pesca), List(dragonDylan, dragonConan))
+    val torneo: Torneo = new TorneoEstandar(List(pesca))
 
     "Ganador en condiciones normales" in {
-      torneo.iniciarTorneo() shouldBe Some(laCabra.copy(hambre = 5.0))
+      torneo.iniciarTorneo(List(laCabra, remisero), List(dragonDylan, dragonConan)) shouldBe Some(laCabra.copy(hambre = 5.0))
     }
   }
 
