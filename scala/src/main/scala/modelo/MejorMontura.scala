@@ -1,23 +1,26 @@
 package modelo
 
-import modelo.competidor.{Competidor, Vikingo}
+import modelo.competidor.{Competidor, Jinete, Vikingo}
 import modelo.dragon.Dragon
 import modelo.posta.Posta
-import modelo.torneo.{CriterioGanador, Primero}
 
 case object MejorMontura extends (
   (
     Vikingo,
     List[Dragon],
     Posta
-  ) => Option[Competidor]) { //Option ya que podría ocurrir que ninguno pueda participar
+  ) => Option[Dragon]) { //Option ya que podría ocurrir que ninguno pueda participar
 
   def apply(vikingo: Vikingo,
             dragones: List[Dragon],
             posta: Posta
-           ): Option[Competidor] = {
+           ): Option[Dragon] = {
     val posiblesOpciones: List[Competidor] = dragones.map(vikingo.montar).filter(posta.puedeParticipar) :+ vikingo
-    posta.ordenarSegunResultado(posiblesOpciones).headOption
+    val maybeMejorOpcion = posta.ordenarSegunResultado(posiblesOpciones).headOption
+    maybeMejorOpcion match {
+      case Some(Jinete(_, dragon)) => Some(dragon)
+      case _ => None
+    }
   }
 }
 

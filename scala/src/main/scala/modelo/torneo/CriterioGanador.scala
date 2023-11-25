@@ -1,17 +1,17 @@
 package modelo.torneo
 
-import modelo.competidor.Competidor
+import modelo.competidor.{Vikingo, Vikingo}
 
-trait CriterioGanador extends (List[Competidor] => Competidor)
+trait CriterioGanador extends (List[Vikingo] => Vikingo)
 
 case object Primero extends CriterioGanador {
-  def apply(competidores: List[Competidor]): Competidor = {
+  def apply(competidores: List[Vikingo]): Vikingo = {
     competidores.head
   }
 }
 
 case object Ultimo extends CriterioGanador {
-  def apply(competidores: List[Competidor]): Competidor = {
+  def apply(competidores: List[Vikingo]): Vikingo = {
     competidores.last
   }
 }
