@@ -1,7 +1,7 @@
-import modelo.competidor.{Arma, Vikingo}
+import modelo.competidor.{Arma, Equipo, Vikingo}
 import modelo.dragon.Dragon
 import modelo.posta.{Carrera, Combate, Pesca}
-import modelo.torneo.{PrimeraMitadPasaDeRonda, PrimeroGanador, Torneo, TorneoConHandicap, TorneoConVeto, TorneoEliminacion, TorneoEstandar, TorneoInverso}
+import modelo.torneo.{Torneo, TorneoConHandicap, TorneoConVeto, TorneoEliminacion, TorneoEstandar, TorneoInverso, TorneoPorEquipos}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
@@ -25,12 +25,12 @@ class TorneoSpec extends AnyFreeSpec {
   }
 
   "TorneoConVeto" - {
-    val dragonDylan: Dragon = Dragon(1000, 1, 600, 50, "dylan")
-    val dragonConan: Dragon = Dragon(2000, 2, 700, 70, "conan")
-    val dragonVetado: Dragon = Dragon(800, 10, 2000, 1, "vetado")
-    val vikingo1: Vikingo = Vikingo(100, 20, 100, Some(Arma(20)), nombre = "juli")
-    val vikingo2: Vikingo = Vikingo(80, 25, 100, None, nombre = "agus")
-    val vikingo3: Vikingo = Vikingo(120, 18, 100, Some(Arma(30)), nombre = "santi")
+    val dragonDylan: Dragon = Dragon(1000, 1, 600, 50)
+    val dragonConan: Dragon = Dragon(2000, 2, 700, 70)
+    val dragonVetado: Dragon = Dragon(800, 10, 2000, 1)
+    val vikingo1: Vikingo = Vikingo(100, 20, 100, Some(Arma(20)))
+    val vikingo2: Vikingo = Vikingo(80, 25, 100, None)
+    val vikingo3: Vikingo = Vikingo(120, 18, 100, Some(Arma(30)))
 
     val carrera = Carrera(distanciaKm = 10)
     val torneoVeto = new TorneoConVeto(List(carrera), _.barbarosidadNecesariaParaMontarlo > 30)
@@ -41,8 +41,8 @@ class TorneoSpec extends AnyFreeSpec {
   }
 
   "TorneoConHandicap" - {
-    val dragonDylan: Dragon = Dragon(1000, 1, 600, 50, "dylan")
-    val dragonConan: Dragon = Dragon(2000, 2, 700, 70, "conan")
+    val dragonDylan: Dragon = Dragon(1000, 1, 600, 50)
+    val dragonConan: Dragon = Dragon(2000, 2, 700, 70)
 
     val vikingo1: Vikingo = Vikingo(100, 20, 30, Some(Arma(20)))
     val vikingo2: Vikingo = Vikingo(80, 25, 40, None)
@@ -86,6 +86,29 @@ class TorneoSpec extends AnyFreeSpec {
 
     "Ganador en condiciones normales" in {
       torneoInverso.iniciarTorneo(List(vikingo1, vikingo2, vikingo3), List(dragonDylan, dragonConan)) shouldBe Some(vikingo3.copy(hambre=10.0))
+    }
+  }
+
+  "Torneo por equipos" - {
+    val perritoBarrios: Vikingo = Vikingo(100, 99, 120, Some(Arma(20)))
+    val malcomBraida: Vikingo = Vikingo(80, 88, 120, None)
+    val augustoBatalla: Vikingo = Vikingo(120, 120, 150, Some(Arma(30)))
+    val messi: Vikingo = Vikingo(90, 22, 200, Some(Arma(25)))
+    val diMaria: Vikingo = Vikingo(90, 81, 200, None)
+    val elDibu: Vikingo = Vikingo(90, 45, 200, None)
+
+    val sanLorenzo = new Equipo("San lorenzo")
+    val laScaloneta = new Equipo("La Scaloneta")
+
+    val plantelScaloneta = laScaloneta.ficharJugadores(List(messi, diMaria, elDibu))
+    val plantelSanLorenzo = sanLorenzo.ficharJugadores(List(perritoBarrios, malcomBraida, augustoBatalla))
+
+    val carrera = new Carrera(distanciaKm = 10)
+
+    val torneoPorEquipos = new TorneoPorEquipos(List(carrera))
+
+    "una gitana hermosa tiró las cartas dijo que san lorenzo iba a ser campeón" in {
+      torneoPorEquipos.iniciarTorneo(List(plantelScaloneta, plantelSanLorenzo).flatten, List()) shouldBe Some(sanLorenzo)
     }
   }
 }
