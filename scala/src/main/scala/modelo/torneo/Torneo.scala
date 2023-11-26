@@ -18,6 +18,12 @@ abstract class Torneo(
     desarrollarPosta(vikingos, dragones.filter(criterioDragonesDisponibles), postas)
   }
 
+  /*
+    [Correción] Lo que están tratando de hacer es tomar una lista de postas y, arracando de los vikingos iniciales,
+      llegar a los vikingos luego de aplicar todas las postas. Esto se puede hacer con un fold, con eso no necesitan
+      preocuparse por la recursividad y solo tiene que escribir el codigo de ejecutar la posta con los vikingos.
+   */
+
   @tailrec
   private def desarrollarPosta(vikingos: List[Vikingo], dragones: List[Dragon], postas: List[Posta]): Option[GanadorTorneo] = {
     postas match {

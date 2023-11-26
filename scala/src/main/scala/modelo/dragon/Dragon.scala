@@ -2,6 +2,10 @@ package modelo.dragon
 
 import modelo.competidor.Vikingo
 
+/* [Correción] Este modelo no contempla la capacidad de los dragones deberian tener de definir sus condiciones
+    de montura al definirlos, adicional a la condicion obligatoria o las condiciones de la especie.
+
+ */
 case class Dragon (
                     velocidadBase: Double = 60.0,
                     danioBase: Double,
