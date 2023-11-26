@@ -9,7 +9,7 @@ class TorneoEliminacion(
                        ) extends Torneo(
   postas,
   criterioGanador = PrimeroGanador,
-  criterioSiguienteRonda = PrimerosNPasanDeRonda(competidoresQuePasanPorRonda)
+  criterioSiguienteRonda = UltimosNSeQuedanAfuera(competidoresQuePasanPorRonda)
 ) {}
 
 class TorneoInverso(

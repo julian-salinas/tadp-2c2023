@@ -16,9 +16,8 @@ case object UltimaMitadPasaDeRonda extends CriterioSiguienteRonda {
   }
 }
 
-case class PrimerosNPasanDeRonda(n: Int) extends CriterioSiguienteRonda {
+case class UltimosNSeQuedanAfuera(n: Int) extends CriterioSiguienteRonda {
   def apply(competidores: List[Vikingo]): List[Vikingo] = {
-    competidores.take(n)
+    competidores.dropRight(n)
   }
 }
-
