@@ -118,8 +118,9 @@ class TorneoSpec extends AnyFreeSpec {
     val vikingo3: Vikingo = Vikingo(120, 18, 35, None)
 
     val pescaReDificil = Pesca(pesoMinimo = 500)
+    val carrera = Carrera(distanciaKm = 1)
 
-    val torneo: Torneo = new TorneoEstandar(List(pescaReDificil))
+    val torneo: Torneo = new TorneoEstandar(List(pescaReDificil, carrera))
 
     "nadie se la banca, no gana nadie" - {
       torneo.iniciarTorneo(List(vikingo1, vikingo2, vikingo3)) shouldBe None
