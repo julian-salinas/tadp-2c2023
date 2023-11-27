@@ -14,7 +14,7 @@ abstract class Torneo(
                    criterioDragonesDisponibles: Dragon => Boolean = _ => true,
                    criterioEleccionDeMonturas: List[Vikingo] => List[Vikingo] = identity // Por defecto, no hace ningún cambio
                    ) {
-  def iniciarTorneo(vikingos: List[Vikingo], dragones: List[Dragon]): Option[GanadorTorneo] = {
+  def iniciarTorneo(vikingos: List[Vikingo], dragones: List[Dragon] = List()): Option[GanadorTorneo] = {
     desarrollarTorneo(vikingos, dragones.filter(criterioDragonesDisponibles), postas)
   }
 

@@ -69,7 +69,7 @@ class TorneoSpec extends AnyFreeSpec {
     val torneoEliminacion = new TorneoEliminacion(List(combate, carrera), competidoresQuePasanPorRonda = 2)
 
     "Ganador elimnando los ultimos 2 por cada ronda" in {
-      torneoEliminacion.iniciarTorneo(List(vikingo1, vikingo2, vikingo3, vikingo4, vikingo5), List()) shouldBe Some(vikingo5.copy(hambre=12.0))
+      torneoEliminacion.iniciarTorneo(List(vikingo1, vikingo2, vikingo3, vikingo4, vikingo5)) shouldBe Some(vikingo5.copy(hambre=12.0))
     }
   }
 
@@ -108,7 +108,21 @@ class TorneoSpec extends AnyFreeSpec {
     val torneoPorEquipos = new TorneoPorEquipos(List(carrera))
 
     "una gitana hermosa tiró las cartas dijo que san lorenzo iba a ser campeón" in {
-      torneoPorEquipos.iniciarTorneo(List(plantelScaloneta, plantelSanLorenzo).flatten, List()) shouldBe Some(sanLorenzo)
+      torneoPorEquipos.iniciarTorneo(List(plantelScaloneta, plantelSanLorenzo).flatten) shouldBe Some(sanLorenzo)
+    }
+  }
+
+  "Torneo demasiado tryhard, nadie puede hacer ni la primera posta" - {
+    val vikingo1: Vikingo = Vikingo(100, 20, 30, None)
+    val vikingo2: Vikingo = Vikingo(80, 25, 40, None)
+    val vikingo3: Vikingo = Vikingo(120, 18, 35, None)
+
+    val pescaReDificil = Pesca(pesoMinimo = 500)
+
+    val torneo: Torneo = new TorneoEstandar(List(pescaReDificil))
+
+    "nadie se la banca, no gana nadie" - {
+      torneo.iniciarTorneo(List(vikingo1, vikingo2, vikingo3)) shouldBe None
     }
   }
 }
