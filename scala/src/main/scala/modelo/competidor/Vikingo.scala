@@ -27,15 +27,12 @@ case class Vikingo (
   def danio(): Double = { this.barbarosidad + danioItem}
 
   // [Corrección] aca no están realmente aprovechando el optional ya que están basicamente
-  // haciendo lo mismo que preguntar si el item no sea null
+  // haciendo lo mismo que preguntar si el item no sea null - Corregido
   private def danioItem: Double = {
-    item match {
-      case Some(i) => i match {
-        case a: Arma => a.danioAdicional
-        case _ => 0
-    }
+    item.map {
+      case a: Arma => a.danioAdicional
       case _ => 0
-    }
+    }.getOrElse(0)
   }
 
   override def cantidadDePescadoQuePuedeTransportar(): Double = this.peso + this.barbarosidad * 2
