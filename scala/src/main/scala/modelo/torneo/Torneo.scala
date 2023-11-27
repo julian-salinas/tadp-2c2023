@@ -30,25 +30,28 @@ abstract class Torneo(
         if (quedaUltimoParticipanteEnPie(vikingos)) {
           return Some(vikingos.head) //Queda un solo vikingo, gana él
         }
-        if (ningunVikingoSeBancariaEstaPosta(vikingos, posta)) {
-          return None // No hay ganador y finaliza el torneo
-        }
         val ganadores = competir(vikingos, dragones, posta)
-        desarrollarTorneo(ganadores, dragones, demasPostas)
+        ganadores match {
+          case Some(competidores) => desarrollarTorneo(competidores, dragones, demasPostas)
+          case _ => None
+        }
       case Nil =>
         criterioGanador(vikingos)
     }
   }
 
-  private def competir(vikingos: List[Vikingo], dragones: List[Dragon], posta: Posta): List[Vikingo] = {
+  private def competir(vikingos: List[Vikingo], dragones: List[Dragon], posta: Posta): Option[List[Vikingo]] = {
     val participantes = elegirMonturas(vikingos, dragones, posta)
+    if (ningunCompetidorSeBancariaEstaPosta(vikingos, posta)) {
+      return None // No hay ganador y finaliza el torneo
+    }
     val resultado = posta.competir(participantes)
-    criterioSiguienteRonda(obtenerVikingos(resultado))
+    Some(criterioSiguienteRonda(obtenerVikingos(resultado)))
   }
 
   private def quedaUltimoParticipanteEnPie(vikingos: List[Vikingo]): Boolean = vikingos.length == 1
 
-  private def ningunVikingoSeBancariaEstaPosta(vikingos: List[Vikingo], posta: Posta): Boolean = {
+  private def ningunCompetidorSeBancariaEstaPosta(vikingos: List[Competidor], posta: Posta): Boolean = {
     !vikingos.exists(_.puedePermitirseParticiparEn(posta))
   }
 
