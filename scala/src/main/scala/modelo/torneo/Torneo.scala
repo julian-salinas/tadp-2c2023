@@ -25,17 +25,16 @@ abstract class Torneo(
    */
   @tailrec
   private def desarrollarTorneo(vikingos: List[Vikingo], dragones: List[Dragon], postas: List[Posta]): Option[GanadorTorneo] = {
-    postas match {
-      case posta :: demasPostas =>
-        vikingos match {
-          case vikingos if vikingos.isEmpty => None
-          case vikingos if vikingos.length == 1 => Some(vikingos.head)
-          case _ =>
-            val ganadores = competir(vikingos, dragones, posta)
-            desarrollarTorneo(ganadores, dragones, demasPostas)
-        }
-      case Nil =>
-        criterioGanador(vikingos)
+    vikingos match {
+      case vikingos if vikingos.isEmpty => None
+      case vikingos if vikingos.length == 1 => Some(vikingos.head)
+      case _ => postas match {
+        case posta :: demasPostas =>
+          val ganadores = competir(vikingos, dragones, posta)
+          desarrollarTorneo(ganadores, dragones, demasPostas)
+        case Nil =>
+          criterioGanador(vikingos)
+      }
     }
   }
 
