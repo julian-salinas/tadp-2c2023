@@ -11,8 +11,8 @@ class PostaSpec extends AnyFreeSpec {
     val vikingos: List[Vikingo] = List(vikingoLiviano, vikingoPesado, vikingoNi)
 
     "Gana el vikingo pesado" in {
-      val resultado: List[Competidor] = Pesca().ordenarSegunResultado(vikingos)
-      resultado shouldEqual List(vikingoPesado, vikingoNi, vikingoLiviano)
+      val resultado: List[Competidor] = (new Pesca()).competir(vikingos)
+      resultado shouldEqual List(vikingoPesado.copy(hambre=5), vikingoNi.copy(hambre=5), vikingoLiviano.copy(hambre=5))
     }
   }
 
@@ -23,8 +23,8 @@ class PostaSpec extends AnyFreeSpec {
     val vikingos: List[Vikingo] = List(vikingoLento, vikingoNormal, vikingoRapido)
 
     "Gana el vikingo rápido" in {
-      val resultado: List[Competidor] = Carrera(distanciaKm = 10).ordenarSegunResultado(vikingos)
-      resultado shouldEqual List(vikingoRapido, vikingoNormal, vikingoLento)
+      val resultado: List[Competidor] = (new Carrera(distanciaKm = 10)).competir(vikingos)
+      resultado shouldEqual List(vikingoRapido.copy(hambre=10), vikingoNormal.copy(hambre=10), vikingoLento.copy(hambre=10))
     }
   }
 
@@ -34,8 +34,8 @@ class PostaSpec extends AnyFreeSpec {
     val vikingos: List[Vikingo] = List(vikingoFuerte, vikingoDebil)
 
     "Gana el vikingo fuerte" in {
-      val resultado: List[Competidor] = Combate().ordenarSegunResultado(vikingos)
-      resultado shouldEqual List(vikingoFuerte, vikingoDebil)
+      val resultado: List[Competidor] = (new Combate()).competir(vikingos)
+      resultado shouldEqual List(vikingoFuerte.copy(hambre=10), vikingoDebil.copy(hambre=10))
     }
   }
 
