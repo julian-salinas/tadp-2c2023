@@ -26,8 +26,8 @@ case class Vikingo (
 
   def danio(): Double = { this.barbarosidad + danioItem}
 
-  // [Corrección] aca no están realmente aprovechando el optional ya que están basicamente
-  // haciendo lo mismo que preguntar si el item no sea null - Corregido
+  // Corregido - [Corrección] aca no están realmente aprovechando el optional ya que están basicamente
+  // haciendo lo mismo que preguntar si el item no sea null
   private def danioItem: Double = {
     item.map {
       case a: Arma => a.danioAdicional
@@ -39,11 +39,15 @@ case class Vikingo (
 
 }
 
-//TODO test
 object Hipo extends Vikingo(60, 20, 30, Some(SistemaDeVuelo))
 object Astrid extends Vikingo(60, 30, 50, Some(Arma(30.0)))
 object Patan extends Vikingo(100, 10, 70, Some(Arma(100.0)))
 object Patapez extends Vikingo(120, 5, 150, Some(Alimento(10))) {
-  override def incrementarHambrePosta(variacion: Double): Vikingo = super.incrementarHambrePosta(variacion * 2 - item.get.alimento())
-  override def puedePermitirseParticiparEn(posta: Posta): Boolean = super.puedePermitirseParticiparEn(posta) && hambre <= 50
+  override def incrementarHambrePosta(variacion: Double): Vikingo = {
+    val alimentoConsumido = item.collect { case Alimento(a) => a }.getOrElse(0.0)
+    super.incrementarHambrePosta(variacion * 2 - alimentoConsumido)
+  }
+
+  override def puedePermitirseParticiparEn(posta: Posta): Boolean =
+    super.puedePermitirseParticiparEn(posta) && hambre <= 50
 }

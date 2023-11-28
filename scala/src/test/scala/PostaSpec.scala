@@ -3,8 +3,6 @@ import modelo.posta.{Carrera, Combate, Pesca}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
-//TODO: Revisar tema filtrado tanto por hambre como las
-
 class PostaSpec extends AnyFreeSpec {
   "Tres vikingos compiten en una pesca" - {
     val vikingoPesado: Vikingo = Vikingo(300, 10, 10, Some(Arma(40)), 0)

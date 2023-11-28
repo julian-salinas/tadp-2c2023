@@ -10,11 +10,11 @@ class Posta(
     competidores.sortWith((a, b) => esMejorQue(a, b))
   }
 
-  def esMejorQue(unCompetidor: Competidor, otroCompetidor: Competidor): Boolean = {
+  private def esMejorQue(unCompetidor: Competidor, otroCompetidor: Competidor): Boolean = {
     obtenerPuntaje(unCompetidor) > obtenerPuntaje(otroCompetidor)
   }
 
-  def obtenerPuntaje(competidor: Competidor): Double = {
+  private def obtenerPuntaje(competidor: Competidor): Double = {
     criterioPuntaje(competidor)
   }
 
