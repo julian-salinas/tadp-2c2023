@@ -5,11 +5,11 @@ import modelo.posta.Posta
 
 class TorneoEliminacion(
                          postas: List[Posta],
-                         competidoresQuePasanPorRonda: Int
+                         competidoresEliminadosPorRonda: Int
                        ) extends Torneo(
   postas,
   criterioGanador = PrimeroGanador,
-  criterioSiguienteRonda = UltimosNSeQuedanAfuera(competidoresQuePasanPorRonda)
+  criterioSiguienteRonda = UltimosNSeQuedanAfuera(competidoresEliminadosPorRonda)
 ) {}
 
 class TorneoInverso(

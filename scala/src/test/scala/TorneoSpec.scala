@@ -66,7 +66,7 @@ class TorneoSpec extends AnyFreeSpec {
     val combate = Combate(barbarosidadMinima = 100)
     val carrera = Carrera(distanciaKm = 2)
 
-    val torneoEliminacion = new TorneoEliminacion(List(combate, carrera), competidoresQuePasanPorRonda = 2)
+    val torneoEliminacion = new TorneoEliminacion(List(combate, carrera), competidoresEliminadosPorRonda = 2)
 
     "Ganador elimnando los ultimos 2 por cada ronda" in {
       torneoEliminacion.iniciarTorneo(List(vikingo1, vikingo2, vikingo3, vikingo4, vikingo5)) shouldBe Some(vikingo5.copy(hambre=12.0))
