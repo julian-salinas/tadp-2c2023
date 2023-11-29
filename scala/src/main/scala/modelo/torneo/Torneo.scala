@@ -25,6 +25,7 @@ abstract class Torneo(
    */
   private def desarrollarTorneo(vikingos: List[Vikingo], dragones: List[Dragon], postas: List[Posta]): Option[GanadorTorneo] = {
     val resultadoTorneo = postas.foldLeft(Option(vikingos): Option[List[Vikingo]]) {
+      case (Some(vikingosRestantes), _) if vikingosRestantes.isEmpty => None
       case (Some(vikingosRestantes), _) if vikingosRestantes.length == 1 => Some(vikingosRestantes)
       case (Some(vikingosRestantes), posta) =>
         val ganadores = competir(vikingosRestantes, dragones, posta)
