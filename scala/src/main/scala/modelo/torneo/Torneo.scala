@@ -24,14 +24,14 @@ abstract class Torneo(
       preocuparse por la recursividad y solo tiene que escribir el codigo de ejecutar la posta con los vikingos.
    */
   private def desarrollarTorneo(vikingos: List[Vikingo], dragones: List[Dragon], postas: List[Posta]): Option[GanadorTorneo] = {
-    val ganadorFinal = postas.foldLeft(Option(vikingos): Option[List[Vikingo]]) {
+    val resultadoTorneo = postas.foldLeft(Option(vikingos): Option[List[Vikingo]]) {
       case (Some(vikingosRestantes), _) if vikingosRestantes.length == 1 => Some(vikingosRestantes)
       case (Some(vikingosRestantes), posta) =>
         val ganadores = competir(vikingosRestantes, dragones, posta)
         Some(ganadores)
       case (None, _) => None
     }
-    ganadorFinal.flatMap(criterioGanador)
+    resultadoTorneo.flatMap(criterioGanador)
   }
 
   private def competir(vikingos: List[Vikingo], dragones: List[Dragon], posta: Posta): List[Vikingo] = {
