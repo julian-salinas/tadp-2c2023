@@ -126,4 +126,19 @@ class TorneoSpec extends AnyFreeSpec {
       torneo.iniciarTorneo(List(vikingo1, vikingo2, vikingo3)) shouldBe None
     }
   }
+
+  "Queda un solo participante, gana ese" - {
+    val vikingo1: Vikingo = Vikingo(100, 20, 30, None, 60)
+    val vikingo2: Vikingo = Vikingo(80, 25, 40, None, 60)
+    val vikingo3: Vikingo = Vikingo(120, 18, 35, None, 0)
+
+    val unaCarrera = Carrera(distanciaKm = 50)
+    val otraCarrera = Carrera(distanciaKm = 20)
+
+    val torneo: Torneo = new TorneoEstandar(List(unaCarrera, otraCarrera))
+
+    "gana el unico que sobrevive a la primer carrera" in {
+      torneo.iniciarTorneo(List(vikingo1, vikingo2, vikingo3)) shouldBe Some(vikingo3.copy(hambre=50))
+    }
+  }
 }

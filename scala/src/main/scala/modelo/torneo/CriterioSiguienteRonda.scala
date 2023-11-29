@@ -6,13 +6,13 @@ abstract class CriterioSiguienteRonda extends (List[Vikingo] => List[Vikingo])
 
 case object PrimeraMitadPasaDeRonda extends CriterioSiguienteRonda {
   def apply(competidores: List[Vikingo]): List[Vikingo] = {
-    competidores.take(competidores.length / 2)
+    competidores.take((competidores.length.toFloat / 2).ceil.toInt)
   }
 }
 
 case object UltimaMitadPasaDeRonda extends CriterioSiguienteRonda {
   def apply(competidores: List[Vikingo]): List[Vikingo] = {
-    competidores.takeRight(competidores.length / 2)
+    competidores.takeRight((competidores.length.toFloat / 2).ceil.toInt)
   }
 }
 
