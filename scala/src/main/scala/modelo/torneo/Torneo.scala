@@ -23,19 +23,15 @@ abstract class Torneo(
       llegar a los vikingos luego de aplicar todas las postas. Esto se puede hacer con un fold, con eso no necesitan
       preocuparse por la recursividad y solo tiene que escribir el codigo de ejecutar la posta con los vikingos.
    */
-  @tailrec
   private def desarrollarTorneo(vikingos: List[Vikingo], dragones: List[Dragon], postas: List[Posta]): Option[GanadorTorneo] = {
-    vikingos match {
-      case vikingos if vikingos.isEmpty => None
-      case vikingos if vikingos.length == 1 => Some(vikingos.head)
-      case _ => postas match {
-        case posta :: demasPostas =>
-          val ganadores = competir(vikingos, dragones, posta)
-          desarrollarTorneo(ganadores, dragones, demasPostas)
-        case Nil =>
-          criterioGanador(vikingos)
-      }
+    val ganadorFinal = postas.foldLeft(Option(vikingos): Option[List[Vikingo]]) {
+      case (Some(vikingosRestantes), _) if vikingosRestantes.length == 1 => Some(vikingosRestantes)
+      case (Some(vikingosRestantes), posta) =>
+        val ganadores = competir(vikingosRestantes, dragones, posta)
+        Some(ganadores)
+      case (None, _) => None
     }
+    ganadorFinal.flatMap(criterioGanador)
   }
 
   private def competir(vikingos: List[Vikingo], dragones: List[Dragon], posta: Posta): List[Vikingo] = {
