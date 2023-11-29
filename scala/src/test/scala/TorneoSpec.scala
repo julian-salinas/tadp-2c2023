@@ -57,16 +57,16 @@ class TorneoSpec extends AnyFreeSpec {
   }
 
   "TorneoEliminacion" - {
-    val vikingo1: Vikingo = Vikingo(100, 20, 120, Some(Arma(20)))
+    val vikingo1: Vikingo = Vikingo(100, 20, 250, Some(Arma(20)))
     val vikingo2: Vikingo = Vikingo(80, 25, 120, None)
-    val vikingo3: Vikingo = Vikingo(120, 18, 150, Some(Arma(30)))
+    val vikingo3: Vikingo = Vikingo(120, 18, 300, Some(Arma(30)))
     val vikingo4: Vikingo = Vikingo(90, 22, 120, Some(Arma(25)))
-    val vikingo5: Vikingo = Vikingo(90, 150, 141, None)
+    val vikingo5: Vikingo = Vikingo(90, 150, 210, None)
 
     val combate = Combate(barbarosidadMinima = 100)
     val carrera = Carrera(distanciaKm = 2)
 
-    val torneoEliminacion = new TorneoEliminacion(List(combate, carrera), competidoresQuePasanPorRonda = 2)
+    val torneoEliminacion = new TorneoEliminacion(List(combate, carrera), competidoresEliminadosPorRonda = 2)
 
     "Ganador elimnando los ultimos 2 por cada ronda" in {
       torneoEliminacion.iniciarTorneo(List(vikingo1, vikingo2, vikingo3, vikingo4, vikingo5)) shouldBe Some(vikingo5.copy(hambre=12.0))
