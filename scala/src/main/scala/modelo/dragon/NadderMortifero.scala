@@ -1,18 +1,17 @@
 package modelo.dragon
 
 import modelo.competidor.Vikingo
+import modelo.dragon.RequisitosMontura.RequisitoMontura
 
 class NadderMortifero(
                             velocidadBase: Double,
                             peso: Double,
-                            barbarosidadNecesariaParaMontarlo: Double
+                            barbarosidadNecesariaParaMontarlo: Double,
+                            requisitosAdicionalesParaMontarlo: List[RequisitoMontura]
                           ) extends Dragon(
   velocidadBase,
   150,
   peso,
-  barbarosidadNecesariaParaMontarlo) {
-
-  override def puedeSerMontadoPor(vikingo: Vikingo): Boolean = {
-    super.puedeSerMontadoPor(vikingo) && vikingo.danio < this.danio
-  }
+  barbarosidadNecesariaParaMontarlo,
+  requisitosAdicionalesParaMontarlo = RequisitosMontura.VikingoHaceMenosDanioQueDragon :: requisitosAdicionalesParaMontarlo) {
 }
