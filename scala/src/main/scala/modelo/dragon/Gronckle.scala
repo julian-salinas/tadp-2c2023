@@ -1,16 +1,21 @@
 package modelo.dragon
 
+import modelo.competidor.Vikingo
+import modelo.dragon.RequisitosMontura.{RequisitoMontura, SinRequisitosAdicionales}
+
 class Gronckle(
                      velocidadBase: Double = 60.0,
                      danioBase: Double,
                      peso: Double,
                      barbarosidadNecesariaParaMontarlo: Double,
-                     pesoQuePuedeSoportar: Double
+                     pesoQuePuedeSoportar: Double,
+                     requisitosAdicionalesParaMontarlo: List[RequisitoMontura] = SinRequisitosAdicionales
                    ) extends Dragon(
   velocidadBase,
   danioBase,
   peso,
-  barbarosidadNecesariaParaMontarlo) {
+  barbarosidadNecesariaParaMontarlo,
+  requisitosAdicionalesParaMontarlo) {
 
   override def danio(): Double = {
     peso * 5
